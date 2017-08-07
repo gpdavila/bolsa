@@ -89,12 +89,12 @@ struct OpenCLSetup {
             }
         }
         delete[] clPlatforms;
-        fprintf(stderr, "\n\nPlatform %p\t\n\n", clPlatform);
+        //fprintf(stderr, "\n\nPlatform %p\t\n\n", clPlatform);
 
         cl_uint clNumDevices;
         clStatus = clGetDeviceIDs(clPlatform, CL_DEVICE_TYPE_ALL, 0, NULL, &clNumDevices);
         CL_ERR();
-        fprintf(stderr, "\n\n# Devices %d\t\n\n", clNumDevices);
+        //fprintf(stderr, "\n\n# Devices %d\t\n\n", clNumDevices);
 
 
         cl_device_id *clDevices = new cl_device_id[clNumDevices];
