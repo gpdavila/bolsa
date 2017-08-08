@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define NUMERO_LINHAS 59
-#define NUMERO_NODOS 59
+#define NUMERO_LINHAS 58333344
+#define NUMERO_NODOS 23947347
 
 typedef struct Linha {
 	 int origem;		
@@ -12,9 +12,10 @@ typedef struct Linha {
  
 int main()
 {
+	printf("Aqui\n");
    FILE *fp;
    Linha linha[NUMERO_LINHAS]; // Deve ter o tamanho do número de linhas do arquivo
-   fp = fopen("grafo_teste.txt","r"); // read mode
+   fp = fopen("USA-road-d.USA.gr","r"); // read mode
    char buf[256];
    char *token;
    int contador = 0;
