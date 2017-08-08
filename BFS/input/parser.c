@@ -1,24 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define NUMERO_LINHAS 58333344
-#define NUMERO_NODOS 23947347
+
+
+//#define NUMERO_LINHAS 58333344
+//#define NUMERO_NODOS 23947347
 
 typedef struct Linha {
-	 int origem;		
-	 int destino;		
-	 int peso;	
+	 long origem;		
+	 long destino;		
+	 long peso;	
 }Linha;
  
 int main()
 {
 	printf("Aqui\n");
    FILE *fp;
-   Linha linha[NUMERO_LINHAS]; // Deve ter o tamanho do número de linhas do arquivo
+   Linha linha[58333344]; // Deve ter o tamanho do número de linhas do arquivo
    fp = fopen("USA-road-d.USA.gr","r"); // read mode
    char buf[256];
    char *token;
-   int contador = 0;
+   long contador = 0;
    if( fp == NULL )
    {
       perror("Error while opening the file.\n");
@@ -30,13 +32,13 @@ int main()
 		token = strtok(buf," ");	// Letra "a" == Lixo
 
 		token = strtok(NULL," ");	// Colocar na ED 
-		linha[contador].origem = atoi(token);
+		linha[contador].origem = atol(token);
 
 		token = strtok(NULL," ");	// Colocar na ED 
-		linha[contador].destino = atoi(token);
+		linha[contador].destino = atol(token);
 
 		token = strtok(NULL," ");	// Colocar na ED 
-		linha[contador].peso = atoi(token);
+		linha[contador].peso = atol(token);
 				
 	contador = contador + 1;
 	}
@@ -51,25 +53,25 @@ int main()
     }
 
 	contador = 0;
-	int arcos = 0;
-	int i;
-	int pos_atual = 0;
-	for(contador = 1; contador <= NUMERO_NODOS; contador++){
-		for(i = 0; i < NUMERO_LINHAS; i++){
+	long arcos = 0;
+	long i;
+	long pos_atual = 0;
+	for(contador = 1; contador <= 23947347; contador++){
+		for(i = 0; i < 58333344; i++){
 			if(linha[i].origem == contador){
 				arcos = arcos + 1;		
 			}
 		}
-	fprintf(fpo,"%d %d\n",pos_atual,arcos);
+	fprintf(fpo,"%ld %ld\n",pos_atual,arcos);
 	pos_atual = pos_atual + arcos;	
 	arcos = 0;
 	}
 	fprintf(fpo,"\n");
 	printf("Já contei\n");
-	for(contador = 1; contador <= NUMERO_NODOS; contador++){
-		for(i = 0; i < NUMERO_LINHAS; i++){
+	for(contador = 1; contador <= 23947347; contador++){
+		for(i = 0; i < 58333344; i++){
 			if(linha[i].origem == contador){
-				fprintf(fpo,"%d %d\n",linha[i].destino,linha[i].peso);
+				fprintf(fpo,"%ld %ld\n",linha[i].destino,linha[i].peso);
 			}
 		}
 		
