@@ -272,7 +272,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 #endif
     clFinish(ocl.clCommandQueue);
     timer.stop("Allocation");
-    timer.print("Allocation", 1);
+    //timer.print("Allocation", 1);
 
     // Initialize
     timer.start("Initialization");
@@ -287,7 +287,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     if (finput = fopen(filename, "rb")) {
         fread(gold, out_size, 1 , finput);
     } else {
-        printf("Error reading gold file");
+        printf("Error reading gold file\n");
         exit(1);
     }
 	fclose(finput);	
@@ -295,7 +295,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 
     clFinish(ocl.clCommandQueue);
     timer.stop("Initialization");
-    timer.print("Initialization", 1);
+    //timer.print("Initialization", 1);
 
 #ifndef OCL_2_0
     // Copy to device
@@ -304,7 +304,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     clFinish(ocl.clCommandQueue);
     CL_ERR();
     timer.stop("Copy To Device");
-    timer.print("Copy To Device", 1);
+    //timer.print("Copy To Device", 1);
 #endif
 
     // Loop over main kernel -- Vamos executar somente uma vez o kernel
@@ -366,7 +366,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
         //if(rep >= p.n_warmup)
        timer.stop("Kernel");
    // }
-    timer.print("Kernel",1);
+    //timer.print("Kernel",1);
 
 
 #ifdef LOGS
@@ -395,7 +395,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
         }
     }
     timer.stop("Copy Back and Merge");
-    timer.print("Copy Back and Merge", 1);
+    //timer.print("Copy Back and Merge", 1);
 #endif
 
 // Verify answer
@@ -428,7 +428,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 #endif
     ocl.release();
     timer.stop("Deallocation");
-    timer.print("Deallocation", 1);
+    //timer.print("Deallocation", 1);
 
     printf("Test Passed\n");
     return 0;
