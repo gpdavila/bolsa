@@ -1,0 +1,832 @@
+-p 0 -d 0 -i 4 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.080000
+Initialization Time (ms): 0.075000
+Copy To Device Time (ms): 0.116000
+Kernel Time (ms): 52.261640
+Copy Back and Merge Time (ms): 3.488000
+Deallocation Time (ms): 2.905000
+Test Passed
+-p 0 -d 0 -i 4 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.070000
+Initialization Time (ms): 0.064000
+Copy To Device Time (ms): 0.105000
+Kernel Time (ms): 52.047740
+Copy Back and Merge Time (ms): 3.612000
+Deallocation Time (ms): 2.848000
+Test Passed
+-p 0 -d 0 -i 4 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.049000
+Initialization Time (ms): 0.057000
+Copy To Device Time (ms): 0.078000
+Kernel Time (ms): 52.054300
+Copy Back and Merge Time (ms): 3.484000
+Deallocation Time (ms): 2.690000
+Test Passed
+-p 0 -d 0 -i 4 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.179000
+Initialization Time (ms): 0.159000
+Copy To Device Time (ms): 0.132000
+Kernel Time (ms): 52.732900
+Copy Back and Merge Time (ms): 2.949000
+Deallocation Time (ms): 2.735000
+Test Passed
+-p 0 -d 0 -i 4 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.134000
+Initialization Time (ms): 0.071000
+Copy To Device Time (ms): 0.098000
+Kernel Time (ms): 52.647540
+Copy Back and Merge Time (ms): 3.534000
+Deallocation Time (ms): 2.883000
+Test Passed
+-p 0 -d 0 -i 4 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.071000
+Initialization Time (ms): 0.064000
+Copy To Device Time (ms): 0.096000
+Kernel Time (ms): 52.790540
+Copy Back and Merge Time (ms): 3.403000
+Deallocation Time (ms): 2.670000
+Test Passed
+-p 0 -d 0 -i 4 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.086000
+Initialization Time (ms): 0.098000
+Copy To Device Time (ms): 0.132000
+Kernel Time (ms): 52.719500
+Copy Back and Merge Time (ms): 3.488000
+Deallocation Time (ms): 2.851000
+Test Passed
+-p 0 -d 0 -i 4 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.089000
+Initialization Time (ms): 0.100000
+Copy To Device Time (ms): 0.145000
+Kernel Time (ms): 52.062960
+Copy Back and Merge Time (ms): 4.323000
+Deallocation Time (ms): 2.767000
+Test Passed
+-p 0 -d 0 -i 5 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.069000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.108000
+Kernel Time (ms): 52.487400
+Copy Back and Merge Time (ms): 3.035000
+Deallocation Time (ms): 2.801000
+Test Passed
+-p 0 -d 0 -i 5 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.066000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.111000
+Kernel Time (ms): 53.363580
+Copy Back and Merge Time (ms): 3.271000
+Deallocation Time (ms): 2.874000
+Test Passed
+-p 0 -d 0 -i 5 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.105000
+Initialization Time (ms): 0.111000
+Copy To Device Time (ms): 0.145000
+Kernel Time (ms): 52.598120
+Copy Back and Merge Time (ms): 3.463000
+Deallocation Time (ms): 2.852000
+Test Passed
+-p 0 -d 0 -i 5 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.128000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.112000
+Kernel Time (ms): 51.882020
+Copy Back and Merge Time (ms): 3.240000
+Deallocation Time (ms): 2.766000
+Test Passed
+-p 0 -d 0 -i 5 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.083000
+Initialization Time (ms): 0.073000
+Copy To Device Time (ms): 0.110000
+Kernel Time (ms): 52.462500
+Copy Back and Merge Time (ms): 3.238000
+Deallocation Time (ms): 1.819000
+Test Passed
+-p 0 -d 0 -i 5 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.057000
+Initialization Time (ms): 0.058000
+Copy To Device Time (ms): 0.084000
+Kernel Time (ms): 51.592900
+Copy Back and Merge Time (ms): 3.211000
+Deallocation Time (ms): 2.804000
+Test Passed
+-p 0 -d 0 -i 5 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.217000
+Initialization Time (ms): 0.106000
+Copy To Device Time (ms): 0.117000
+Kernel Time (ms): 52.122060
+Copy Back and Merge Time (ms): 3.407000
+Deallocation Time (ms): 2.816000
+Test Passed
+-p 0 -d 0 -i 5 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.051000
+Initialization Time (ms): 0.056000
+Copy To Device Time (ms): 0.087000
+Kernel Time (ms): 52.140300
+Copy Back and Merge Time (ms): 3.524000
+Deallocation Time (ms): 2.899000
+Test Passed
+-p 0 -d 0 -i 6 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.130000
+Initialization Time (ms): 0.068000
+Copy To Device Time (ms): 0.117000
+Kernel Time (ms): 53.604500
+Copy Back and Merge Time (ms): 3.980000
+Deallocation Time (ms): 2.910000
+Test Passed
+-p 0 -d 0 -i 6 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.073000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.100000
+Kernel Time (ms): 52.460620
+Copy Back and Merge Time (ms): 3.013000
+Deallocation Time (ms): 2.932000
+Test Passed
+-p 0 -d 0 -i 6 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.047000
+Initialization Time (ms): 0.052000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 52.327000
+Copy Back and Merge Time (ms): 3.331000
+Deallocation Time (ms): 2.778000
+Test Passed
+-p 0 -d 0 -i 6 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.067000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.110000
+Kernel Time (ms): 53.360980
+Copy Back and Merge Time (ms): 3.203000
+Deallocation Time (ms): 2.766000
+Test Passed
+-p 0 -d 0 -i 6 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.045000
+Initialization Time (ms): 0.051000
+Copy To Device Time (ms): 0.077000
+Kernel Time (ms): 51.997380
+Copy Back and Merge Time (ms): 3.147000
+Deallocation Time (ms): 1.859000
+Test Passed
+-p 0 -d 0 -i 6 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.051000
+Initialization Time (ms): 0.055000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 52.260140
+Copy Back and Merge Time (ms): 3.359000
+Deallocation Time (ms): 2.815000
+Test Passed
+-p 0 -d 0 -i 6 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.065000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.097000
+Kernel Time (ms): 53.505860
+Copy Back and Merge Time (ms): 3.071000
+Deallocation Time (ms): 2.657000
+Test Passed
+-p 0 -d 0 -i 6 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.070000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.110000
+Kernel Time (ms): 52.183760
+Copy Back and Merge Time (ms): 3.038000
+Deallocation Time (ms): 1.814000
+Test Passed
+-p 0 -d 0 -i 7 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.151000
+Initialization Time (ms): 0.107000
+Copy To Device Time (ms): 0.130000
+Kernel Time (ms): 52.489080
+Copy Back and Merge Time (ms): 3.087000
+Deallocation Time (ms): 2.877000
+Test Passed
+-p 0 -d 0 -i 7 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.067000
+Initialization Time (ms): 0.062000
+Copy To Device Time (ms): 0.107000
+Kernel Time (ms): 52.671300
+Copy Back and Merge Time (ms): 3.204000
+Deallocation Time (ms): 2.728000
+Test Passed
+-p 0 -d 0 -i 7 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.098000
+Initialization Time (ms): 0.102000
+Copy To Device Time (ms): 0.125000
+Kernel Time (ms): 52.571920
+Copy Back and Merge Time (ms): 2.643000
+Deallocation Time (ms): 2.718000
+Test Passed
+-p 0 -d 0 -i 7 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.216000
+Initialization Time (ms): 0.127000
+Copy To Device Time (ms): 0.128000
+Kernel Time (ms): 52.508040
+Copy Back and Merge Time (ms): 3.030000
+Deallocation Time (ms): 1.991000
+Test Passed
+-p 0 -d 0 -i 7 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.067000
+Initialization Time (ms): 0.062000
+Copy To Device Time (ms): 0.092000
+Kernel Time (ms): 52.625180
+Copy Back and Merge Time (ms): 3.976000
+Deallocation Time (ms): 2.798000
+Test Passed
+-p 0 -d 0 -i 7 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.135000
+Initialization Time (ms): 0.067000
+Copy To Device Time (ms): 0.094000
+Kernel Time (ms): 53.182820
+Copy Back and Merge Time (ms): 3.198000
+Deallocation Time (ms): 2.510000
+Test Passed
+-p 0 -d 0 -i 7 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.224000
+Initialization Time (ms): 0.110000
+Copy To Device Time (ms): 0.133000
+Kernel Time (ms): 53.002240
+Copy Back and Merge Time (ms): 3.225000
+Deallocation Time (ms): 2.729000
+Test Passed
+-p 0 -d 0 -i 7 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.077000
+Initialization Time (ms): 0.071000
+Copy To Device Time (ms): 0.113000
+Kernel Time (ms): 52.563020
+Copy Back and Merge Time (ms): 3.286000
+Deallocation Time (ms): 2.857000
+Test Passed
+-p 0 -d 0 -i 8 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.133000
+Initialization Time (ms): 0.152000
+Copy To Device Time (ms): 0.099000
+Kernel Time (ms): 52.160960
+Copy Back and Merge Time (ms): 3.048000
+Deallocation Time (ms): 2.790000
+Test Passed
+-p 0 -d 0 -i 8 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.130000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.111000
+Kernel Time (ms): 53.521840
+Copy Back and Merge Time (ms): 2.644000
+Deallocation Time (ms): 2.707000
+Test Passed
+-p 0 -d 0 -i 8 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.046000
+Initialization Time (ms): 0.053000
+Copy To Device Time (ms): 0.083000
+Kernel Time (ms): 52.927900
+Copy Back and Merge Time (ms): 3.150000
+Deallocation Time (ms): 2.758000
+Test Passed
+-p 0 -d 0 -i 8 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.129000
+Initialization Time (ms): 0.067000
+Copy To Device Time (ms): 0.098000
+Kernel Time (ms): 53.444920
+Copy Back and Merge Time (ms): 3.095000
+Deallocation Time (ms): 1.871000
+Test Passed
+-p 0 -d 0 -i 8 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.081000
+Initialization Time (ms): 0.079000
+Copy To Device Time (ms): 0.100000
+Kernel Time (ms): 53.519320
+Copy Back and Merge Time (ms): 3.110000
+Deallocation Time (ms): 2.826000
+Test Passed
+-p 0 -d 0 -i 8 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.044000
+Initialization Time (ms): 0.052000
+Copy To Device Time (ms): 0.087000
+Kernel Time (ms): 53.653700
+Copy Back and Merge Time (ms): 3.317000
+Deallocation Time (ms): 2.834000
+Test Passed
+-p 0 -d 0 -i 8 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.061000
+Initialization Time (ms): 0.058000
+Copy To Device Time (ms): 0.082000
+Kernel Time (ms): 53.897600
+Copy Back and Merge Time (ms): 2.964000
+Deallocation Time (ms): 2.846000
+Test Passed
+-p 0 -d 0 -i 8 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.142000
+Initialization Time (ms): 0.162000
+Copy To Device Time (ms): 0.124000
+Kernel Time (ms): 53.497800
+Copy Back and Merge Time (ms): 2.962000
+Deallocation Time (ms): 2.743000
+Test Passed
+-p 0 -d 0 -i 9 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.226000
+Initialization Time (ms): 0.110000
+Copy To Device Time (ms): 0.120000
+Kernel Time (ms): 52.617360
+Copy Back and Merge Time (ms): 3.078000
+Deallocation Time (ms): 2.232000
+Test Passed
+-p 0 -d 0 -i 9 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.268000
+Initialization Time (ms): 0.118000
+Copy To Device Time (ms): 0.122000
+Kernel Time (ms): 52.241920
+Copy Back and Merge Time (ms): 3.041000
+Deallocation Time (ms): 2.760000
+Test Passed
+-p 0 -d 0 -i 9 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.257000
+Initialization Time (ms): 0.042000
+Copy To Device Time (ms): 0.081000
+Kernel Time (ms): 53.138720
+Copy Back and Merge Time (ms): 3.064000
+Deallocation Time (ms): 2.760000
+Test Passed
+-p 0 -d 0 -i 9 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.137000
+Initialization Time (ms): 0.073000
+Copy To Device Time (ms): 0.099000
+Kernel Time (ms): 53.127780
+Copy Back and Merge Time (ms): 3.168000
+Deallocation Time (ms): 2.902000
+Test Passed
+-p 0 -d 0 -i 9 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.069000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.110000
+Kernel Time (ms): 53.229220
+Copy Back and Merge Time (ms): 3.189000
+Deallocation Time (ms): 2.972000
+Test Passed
+-p 0 -d 0 -i 9 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.048000
+Initialization Time (ms): 0.059000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 52.822320
+Copy Back and Merge Time (ms): 2.987000
+Deallocation Time (ms): 1.975000
+Test Passed
+-p 0 -d 0 -i 9 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.072000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.108000
+Kernel Time (ms): 54.227200
+Copy Back and Merge Time (ms): 3.146000
+Deallocation Time (ms): 2.300000
+Test Passed
+-p 0 -d 0 -i 9 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.083000
+Initialization Time (ms): 0.103000
+Copy To Device Time (ms): 0.123000
+Kernel Time (ms): 53.262680
+Copy Back and Merge Time (ms): 2.917000
+Deallocation Time (ms): 1.981000
+Test Passed
+-p 0 -d 0 -i 10 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.071000
+Initialization Time (ms): 0.067000
+Copy To Device Time (ms): 0.110000
+Kernel Time (ms): 52.457720
+Copy Back and Merge Time (ms): 3.585000
+Deallocation Time (ms): 2.740000
+Test Passed
+-p 0 -d 0 -i 10 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.058000
+Initialization Time (ms): 0.058000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 51.764200
+Copy Back and Merge Time (ms): 3.043000
+Deallocation Time (ms): 2.028000
+Test Passed
+-p 0 -d 0 -i 10 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.536000
+Initialization Time (ms): 0.114000
+Copy To Device Time (ms): 0.130000
+Kernel Time (ms): 52.543380
+Copy Back and Merge Time (ms): 1.766000
+Deallocation Time (ms): 2.559000
+Test Passed
+-p 0 -d 0 -i 10 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.065000
+Initialization Time (ms): 0.064000
+Copy To Device Time (ms): 0.098000
+Kernel Time (ms): 53.204880
+Copy Back and Merge Time (ms): 2.838000
+Deallocation Time (ms): 2.940000
+Test Passed
+-p 0 -d 0 -i 10 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.062000
+Initialization Time (ms): 0.059000
+Copy To Device Time (ms): 0.100000
+Kernel Time (ms): 52.833500
+Copy Back and Merge Time (ms): 3.035000
+Deallocation Time (ms): 1.969000
+Test Passed
+-p 0 -d 0 -i 10 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.125000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.094000
+Kernel Time (ms): 53.396400
+Copy Back and Merge Time (ms): 2.886000
+Deallocation Time (ms): 2.785000
+Test Passed
+-p 0 -d 0 -i 10 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.060000
+Initialization Time (ms): 0.058000
+Copy To Device Time (ms): 0.088000
+Kernel Time (ms): 53.183160
+Copy Back and Merge Time (ms): 2.850000
+Deallocation Time (ms): 2.783000
+Test Passed
+-p 0 -d 0 -i 10 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.048000
+Initialization Time (ms): 0.055000
+Copy To Device Time (ms): 0.080000
+Kernel Time (ms): 53.267040
+Copy Back and Merge Time (ms): 2.823000
+Deallocation Time (ms): 2.892000
+Test Passed
+-p 0 -d 0 -i 11 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.067000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.112000
+Kernel Time (ms): 53.531940
+Copy Back and Merge Time (ms): 2.829000
+Deallocation Time (ms): 2.898000
+Test Passed
+-p 0 -d 0 -i 11 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.043000
+Initialization Time (ms): 0.054000
+Copy To Device Time (ms): 0.078000
+Kernel Time (ms): 53.487440
+Copy Back and Merge Time (ms): 2.986000
+Deallocation Time (ms): 2.827000
+Test Passed
+-p 0 -d 0 -i 11 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.134000
+Initialization Time (ms): 0.152000
+Copy To Device Time (ms): 0.169000
+Kernel Time (ms): 53.166220
+Copy Back and Merge Time (ms): 3.683000
+Deallocation Time (ms): 2.313000
+Test Passed
+-p 0 -d 0 -i 11 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.060000
+Initialization Time (ms): 0.056000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 53.431760
+Copy Back and Merge Time (ms): 2.923000
+Deallocation Time (ms): 2.380000
+Test Passed
+-p 0 -d 0 -i 11 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.096000
+Initialization Time (ms): 0.072000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 52.968780
+Copy Back and Merge Time (ms): 2.948000
+Deallocation Time (ms): 2.994000
+Test Passed
+-p 0 -d 0 -i 11 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.105000
+Initialization Time (ms): 0.079000
+Copy To Device Time (ms): 0.097000
+Kernel Time (ms): 53.174480
+Copy Back and Merge Time (ms): 2.883000
+Deallocation Time (ms): 2.985000
+Test Passed
+-p 0 -d 0 -i 11 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.079000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.088000
+Kernel Time (ms): 53.561300
+Copy Back and Merge Time (ms): 2.975000
+Deallocation Time (ms): 2.376000
+Test Passed
+-p 0 -d 0 -i 11 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.048000
+Initialization Time (ms): 0.052000
+Copy To Device Time (ms): 0.085000
+Kernel Time (ms): 53.919440
+Copy Back and Merge Time (ms): 3.706000
+Deallocation Time (ms): 2.842000
+Test Passed
+-p 0 -d 0 -i 12 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.084000
+Initialization Time (ms): 0.073000
+Copy To Device Time (ms): 0.109000
+Kernel Time (ms): 52.613120
+Copy Back and Merge Time (ms): 2.906000
+Deallocation Time (ms): 2.901000
+Test Passed
+-p 0 -d 0 -i 12 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.042000
+Initialization Time (ms): 0.049000
+Copy To Device Time (ms): 0.084000
+Kernel Time (ms): 52.562240
+Copy Back and Merge Time (ms): 2.750000
+Deallocation Time (ms): 1.851000
+Test Passed
+-p 0 -d 0 -i 12 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.065000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.094000
+Kernel Time (ms): 51.831740
+Copy Back and Merge Time (ms): 2.901000
+Deallocation Time (ms): 2.936000
+Test Passed
+-p 0 -d 0 -i 12 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.085000
+Initialization Time (ms): 0.096000
+Copy To Device Time (ms): 0.126000
+Kernel Time (ms): 52.746380
+Copy Back and Merge Time (ms): 2.745000
+Deallocation Time (ms): 2.789000
+Test Passed
+-p 0 -d 0 -i 12 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.048000
+Initialization Time (ms): 0.057000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 53.010740
+Copy Back and Merge Time (ms): 2.799000
+Deallocation Time (ms): 2.784000
+Test Passed
+-p 0 -d 0 -i 12 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.080000
+Initialization Time (ms): 0.103000
+Copy To Device Time (ms): 0.127000
+Kernel Time (ms): 53.363360
+Copy Back and Merge Time (ms): 2.875000
+Deallocation Time (ms): 2.795000
+Test Passed
+-p 0 -d 0 -i 12 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.078000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.096000
+Kernel Time (ms): 52.655200
+Copy Back and Merge Time (ms): 2.899000
+Deallocation Time (ms): 2.795000
+Test Passed
+-p 0 -d 0 -i 12 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.141000
+Initialization Time (ms): 0.142000
+Copy To Device Time (ms): 0.104000
+Kernel Time (ms): 53.185680
+Copy Back and Merge Time (ms): 2.911000
+Deallocation Time (ms): 2.845000
+Test Passed
+-p 0 -d 0 -i 13 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.068000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.097000
+Kernel Time (ms): 53.500780
+Copy Back and Merge Time (ms): 2.209000
+Deallocation Time (ms): 2.602000
+Test Passed
+-p 0 -d 0 -i 13 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.133000
+Initialization Time (ms): 0.072000
+Copy To Device Time (ms): 0.111000
+Kernel Time (ms): 54.742660
+Copy Back and Merge Time (ms): 2.771000
+Deallocation Time (ms): 2.796000
+Test Passed
+-p 0 -d 0 -i 13 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.062000
+Initialization Time (ms): 0.059000
+Copy To Device Time (ms): 0.081000
+Kernel Time (ms): 55.372520
+Copy Back and Merge Time (ms): 3.159000
+Deallocation Time (ms): 2.831000
+Test Passed
+-p 0 -d 0 -i 13 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.080000
+Initialization Time (ms): 0.072000
+Copy To Device Time (ms): 0.111000
+Kernel Time (ms): 55.418120
+Copy Back and Merge Time (ms): 2.699000
+Deallocation Time (ms): 1.908000
+Test Passed
+-p 0 -d 0 -i 13 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.216000
+Initialization Time (ms): 0.140000
+Copy To Device Time (ms): 0.108000
+Kernel Time (ms): 55.046780
+Copy Back and Merge Time (ms): 2.796000
+Deallocation Time (ms): 2.799000
+Test Passed
+-p 0 -d 0 -i 13 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.109000
+Initialization Time (ms): 0.078000
+Copy To Device Time (ms): 0.096000
+Kernel Time (ms): 55.532460
+Copy Back and Merge Time (ms): 3.096000
+Deallocation Time (ms): 2.853000
+Test Passed
+-p 0 -d 0 -i 13 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.214000
+Initialization Time (ms): 0.192000
+Copy To Device Time (ms): 0.121000
+Kernel Time (ms): 54.961360
+Copy Back and Merge Time (ms): 2.709000
+Deallocation Time (ms): 2.510000
+Test Passed
+-p 0 -d 0 -i 13 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.071000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.102000
+Kernel Time (ms): 55.897200
+Copy Back and Merge Time (ms): 2.069000
+Deallocation Time (ms): 1.866000
+Test Passed
+-p 0 -d 0 -i 14 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.063000
+Initialization Time (ms): 0.058000
+Copy To Device Time (ms): 0.088000
+Kernel Time (ms): 52.337000
+Copy Back and Merge Time (ms): 2.875000
+Deallocation Time (ms): 2.116000
+Test Passed
+-p 0 -d 0 -i 14 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.078000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.098000
+Kernel Time (ms): 53.075580
+Copy Back and Merge Time (ms): 2.797000
+Deallocation Time (ms): 2.899000
+Test Passed
+-p 0 -d 0 -i 14 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.071000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.111000
+Kernel Time (ms): 53.432560
+Copy Back and Merge Time (ms): 2.774000
+Deallocation Time (ms): 2.816000
+Test Passed
+-p 0 -d 0 -i 14 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.070000
+Initialization Time (ms): 0.065000
+Copy To Device Time (ms): 0.110000
+Kernel Time (ms): 54.149320
+Copy Back and Merge Time (ms): 2.863000
+Deallocation Time (ms): 2.891000
+Test Passed
+-p 0 -d 0 -i 14 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.046000
+Initialization Time (ms): 0.054000
+Copy To Device Time (ms): 0.087000
+Kernel Time (ms): 53.731120
+Copy Back and Merge Time (ms): 2.761000
+Deallocation Time (ms): 2.827000
+Test Passed
+-p 0 -d 0 -i 14 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.063000
+Initialization Time (ms): 0.064000
+Copy To Device Time (ms): 0.106000
+Kernel Time (ms): 53.145680
+Copy Back and Merge Time (ms): 2.763000
+Deallocation Time (ms): 2.813000
+Test Passed
+-p 0 -d 0 -i 14 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.048000
+Initialization Time (ms): 0.050000
+Copy To Device Time (ms): 0.096000
+Kernel Time (ms): 54.395940
+Copy Back and Merge Time (ms): 2.923000
+Deallocation Time (ms): 2.823000
+Test Passed
+-p 0 -d 0 -i 14 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.091000
+Initialization Time (ms): 0.075000
+Copy To Device Time (ms): 0.112000
+Kernel Time (ms): 53.790600
+Copy Back and Merge Time (ms): 2.757000
+Deallocation Time (ms): 2.696000
+Test Passed
+-p 0 -d 0 -i 15 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.070000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.107000
+Kernel Time (ms): 52.071620
+Copy Back and Merge Time (ms): 2.925000
+Deallocation Time (ms): 2.256000
+Test Passed
+-p 0 -d 0 -i 15 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.160000
+Initialization Time (ms): 0.098000
+Copy To Device Time (ms): 0.122000
+Kernel Time (ms): 52.740360
+Copy Back and Merge Time (ms): 2.775000
+Deallocation Time (ms): 2.908000
+Test Passed
+-p 0 -d 0 -i 15 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.079000
+Initialization Time (ms): 0.068000
+Copy To Device Time (ms): 0.110000
+Kernel Time (ms): 53.111000
+Copy Back and Merge Time (ms): 2.725000
+Deallocation Time (ms): 2.928000
+Test Passed
+-p 0 -d 0 -i 15 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.069000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.081000
+Kernel Time (ms): 53.343300
+Copy Back and Merge Time (ms): 2.640000
+Deallocation Time (ms): 2.022000
+Test Passed
+-p 0 -d 0 -i 15 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.072000
+Initialization Time (ms): 0.067000
+Copy To Device Time (ms): 0.094000
+Kernel Time (ms): 52.774900
+Copy Back and Merge Time (ms): 2.646000
+Deallocation Time (ms): 2.858000
+Test Passed
+-p 0 -d 0 -i 15 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.067000
+Initialization Time (ms): 0.068000
+Copy To Device Time (ms): 0.096000
+Kernel Time (ms): 54.103400
+Copy Back and Merge Time (ms): 2.769000
+Deallocation Time (ms): 2.792000
+Test Passed
+-p 0 -d 0 -i 15 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.069000
+Initialization Time (ms): 0.063000
+Copy To Device Time (ms): 0.095000
+Kernel Time (ms): 53.157940
+Copy Back and Merge Time (ms): 2.874000
+Deallocation Time (ms): 2.821000
+Test Passed
+-p 0 -d 0 -i 15 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.083000
+Initialization Time (ms): 0.072000
+Copy To Device Time (ms): 0.112000
+Kernel Time (ms): 54.248340
+Copy Back and Merge Time (ms): 2.740000
+Deallocation Time (ms): 2.930000
+Test Passed
+-p 0 -d 0 -i 16 -g 1 -a 1.00 -t 3
+Allocation Time (ms): 0.221000
+Initialization Time (ms): 0.109000
+Copy To Device Time (ms): 0.157000
+Kernel Time (ms): 52.994360
+Copy Back and Merge Time (ms): 2.852000
+Deallocation Time (ms): 2.927000
+Test Passed
+-p 0 -d 0 -i 16 -g 2 -a 1.00 -t 3
+Allocation Time (ms): 0.161000
+Initialization Time (ms): 0.190000
+Copy To Device Time (ms): 0.150000
+Kernel Time (ms): 53.021760
+Copy Back and Merge Time (ms): 2.879000
+Deallocation Time (ms): 2.775000
+Test Passed
+-p 0 -d 0 -i 16 -g 3 -a 1.00 -t 3
+Allocation Time (ms): 0.071000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.096000
+Kernel Time (ms): 52.850840
+Copy Back and Merge Time (ms): 2.767000
+Deallocation Time (ms): 2.786000
+Test Passed
+-p 0 -d 0 -i 16 -g 4 -a 1.00 -t 3
+Allocation Time (ms): 0.044000
+Initialization Time (ms): 0.055000
+Copy To Device Time (ms): 0.086000
+Kernel Time (ms): 53.003560
+Copy Back and Merge Time (ms): 2.709000
+Deallocation Time (ms): 1.823000
+Test Passed
+-p 0 -d 0 -i 16 -g 5 -a 1.00 -t 3
+Allocation Time (ms): 0.046000
+Initialization Time (ms): 0.055000
+Copy To Device Time (ms): 0.085000
+Kernel Time (ms): 54.062800
+Copy Back and Merge Time (ms): 2.707000
+Deallocation Time (ms): 2.661000
+Test Passed
+-p 0 -d 0 -i 16 -g 6 -a 1.00 -t 3
+Allocation Time (ms): 0.072000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.111000
+Kernel Time (ms): 53.735900
+Copy Back and Merge Time (ms): 2.774000
+Deallocation Time (ms): 2.681000
+Test Passed
+-p 0 -d 0 -i 16 -g 7 -a 1.00 -t 3
+Allocation Time (ms): 0.128000
+Initialization Time (ms): 0.066000
+Copy To Device Time (ms): 0.100000
+Kernel Time (ms): 53.794180
+Copy Back and Merge Time (ms): 2.741000
+Deallocation Time (ms): 2.777000
+Test Passed
+-p 0 -d 0 -i 16 -g 8 -a 1.00 -t 3
+Allocation Time (ms): 0.047000
+Initialization Time (ms): 0.050000
+Copy To Device Time (ms): 0.082000
+Kernel Time (ms): 54.171280
+Copy Back and Merge Time (ms): 2.917000
+Deallocation Time (ms): 2.827000
+Test Passed
