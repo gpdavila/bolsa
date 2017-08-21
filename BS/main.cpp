@@ -187,6 +187,23 @@ struct Params {
 };
 
 // Input Data -----------------------------------------------------------------
+void new_read_input(XYZ *in, const Params &p) {
+
+    // Open input file
+    FILE *f = NULL;
+    char filename[100];
+    snprintf(filename, 100, "input_%d",p.out_size_i); // Gold com a resolução 
+    int in_size   = (p.in_size_i + 1) * (p.in_size_j + 1) * sizeof(XYZ);
+    FILE *finput;
+    if (finput = fopen(filename, "rb")) {
+        fread(in, in_size, 1 , finput);
+    } else {
+        printf("Error reading input file\n");
+        exit(1);
+    }
+	fclose(finput);	
+
+}
 void read_input(XYZ *in, const Params &p) {
 
     // Open input file
@@ -274,7 +291,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     timer.start("Initialization");
     const int max_wi = ocl.max_work_items(ocl.clKernel);
 //	printf("Maximum Work Items %d\n",max_wi);
-    read_input(h_in, p);
+    new_read_input(h_in, p);
 
 // *********************** Lendo GOLD   *****************************
     char filename[100];
@@ -416,7 +433,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
         } else {
             printf(".");
         }
-    	read_input(h_in, p);
+    	new_read_input(h_in, p);
 	}
 
 #ifdef LOGS
