@@ -67,6 +67,7 @@ inline int new_compare_output(XYZ *outp, XYZ *outpCPU, int NI, int NJ, int RESOL
         }
     }
     L1norm2 = (double)(sum_delta2 / sum_ref2);
+	L1norm2 = 1;
     if(L1norm2 >= 1e-6){
         errors++;
         char error_detail[200];
@@ -439,6 +440,6 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     timer.stop("Deallocation");
     //timer.print("Deallocation", 1);
 
-    printf("Test Passed\n");
+   // printf("Test Passed\n");
     return 0;
 }
