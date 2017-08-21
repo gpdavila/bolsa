@@ -204,37 +204,6 @@ void new_read_input(XYZ *in, const Params &p) {
 	fclose(finput);	
 
 }
-void read_input(XYZ *in, const Params &p) {
-
-    // Open input file
-    FILE *f = NULL;
-    f       = fopen(p.file_name, "r");
-    if(f == NULL) {
-        puts("Error opening file");
-        exit(-1);
-    }
-
-    // Store points from input file to array
-    int k = 0, ic = 0;
-    XYZ v[10000];
-#if DOUBLE_PRECISION
-    while(fscanf(f, "%lf,%lf,%lf", &v[ic].x, &v[ic].y, &v[ic].z) == 3)
-#else
-    while(fscanf(f, "%f,%f,%f", &v[ic].x, &v[ic].y, &v[ic].z) == 3)
-#endif
-    {
-        ic++;
-    }
-    for(int i = 0; i <= p.in_size_i; i++) {
-        for(int j = 0; j <= p.in_size_j; j++) {
-            in[i * (p.in_size_j + 1) + j].x = v[k].x;
-            in[i * (p.in_size_j + 1) + j].y = v[k].y;
-            in[i * (p.in_size_j + 1) + j].z = v[k].z;
-            //k++;
-            k = (k + 1) % 16;
-        }
-    }
-}
 
 // Main -----------------------------------------------------------------------
 int main(int argc, char **argv) {
