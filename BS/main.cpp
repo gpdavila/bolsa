@@ -80,15 +80,8 @@ inline int new_compare_output(XYZ *outp, XYZ *outpCPU, int NI, int NJ, int RESOL
 
 //        exit(EXIT_FAILURE);
     }
-        if(errors > 0) {
-            printf("Errors: %d\n",errors);
- //           readFileUnsigned(gold, goldFile, size); ler gold
-        } else {
-            printf(".");
-        }
-  //      readFileUnsigned(data, inputFile, size); ler input
 
-    return 0;
+    return errors;
 }
 
 // Params ---------------------------------------------------------------------
@@ -232,6 +225,7 @@ int main(int argc, char **argv) {
     OpenCLSetup  ocl(p.platform, p.device);
     Timer        timer;
     cl_int       clStatus;
+	int err = 0;
 
 printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_items, p.n_work_groups,p.alpha,p.n_threads);
 
@@ -241,7 +235,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     char test_info[300];
     snprintf(test_info, 300, "-i %d -g %d -a %.2f -t %d",p.n_work_items, p.n_work_groups,p.alpha,p.n_threads);
     start_log_file("openclBezierSurface", test_info);
-	printf("Com LOG\n");
+	//printf("Com LOG\n");
 #endif
 
 
@@ -309,7 +303,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 #endif
 
     // Loop over main kernel -- Vamos executar somente uma vez o kernel
-   // for(int rep = 0; rep < p.n_warmup + p.n_reps; ++rep) {
+    for(int rep = 0; rep < p.n_reps; rep++) {
 
 // Reset
 #ifdef OCL_2_0
@@ -366,7 +360,8 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 
         //if(rep >= p.n_warmup)
        timer.stop("Kernel");
-   // }
+ 
+  //}
     //timer.print("Kernel",1);
 
 
@@ -403,11 +398,24 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 #ifdef OCL_2_0
     verify(h_in, h_out, p.in_size_i, p.in_size_j, p.out_size_i, p.out_size_j);
 #else
-
-    new_compare_output(h_out_merge, gold, p.in_size_i, p.in_size_j, p.out_size_i, p.out_size_j);
-
-
+   err= new_compare_output(h_out_merge, gold, p.in_size_i, p.in_size_j, p.out_size_i, p.out_size_j);
 #endif
+
+        if(err > 0) {
+            printf("Errors: %d\n",err);
+			snprintf(filename, 100, "gold_%d",p.out_size_i); // Gold com a resolução 
+			if (finput = fopen(filename, "rb")) {
+				fread(gold, out_size, 1 , finput);
+			} else {
+				printf("Error reading gold file\n");
+				exit(1);
+			}
+			fclose(finput);	
+        } else {
+            printf(".");
+        }
+    	read_input(h_in, p);
+	}
 
 #ifdef LOGS
     end_log_file();
