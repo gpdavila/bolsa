@@ -43,6 +43,54 @@
 #include <thread>
 #include <assert.h>
 
+//*****************************************  LOG  ***********************************//
+#ifdef LOGS
+#include "../include/log_helper.h"
+#endif
+//************************************************************************************//
+
+inline int new_compare_output(XYZ *outp, XYZ *outpCPU, int NI, int NJ, int RESOLUTIONI, int RESOLUTIONJ) {
+	int errors=0;
+
+    double sum_delta2, sum_ref2, L1norm2;
+    sum_delta2 = 0;
+    sum_ref2   = 0;
+    L1norm2    = 0;
+    for(int i = 0; i < RESOLUTIONI; i++) {
+        for(int j = 0; j < RESOLUTIONJ; j++) {
+            sum_delta2 += fabs(outp[i * RESOLUTIONJ + j].x - outpCPU[i * RESOLUTIONJ + j].x);
+            sum_ref2 += fabs(outpCPU[i * RESOLUTIONJ + j].x);
+            sum_delta2 += fabs(outp[i * RESOLUTIONJ + j].y - outpCPU[i * RESOLUTIONJ + j].y);
+            sum_ref2 += fabs(outpCPU[i * RESOLUTIONJ + j].y);
+            sum_delta2 += fabs(outp[i * RESOLUTIONJ + j].z - outpCPU[i * RESOLUTIONJ + j].z);
+            sum_ref2 += fabs(outpCPU[i * RESOLUTIONJ + j].z);
+        }
+    }
+    L1norm2 = (double)(sum_delta2 / sum_ref2);
+    if(L1norm2 >= 1e-6){
+        errors++;
+        char error_detail[200];
+        sprintf(error_detail,"Delta:%f Ref:%f L1norm2:%f",sum_delta2 ,sum_ref2 ,L1norm2);
+#ifdef LOGS
+        log_error_detail(error_detail);
+#endif			
+#ifdef LOGS
+        log_error_count(errors);
+#endif
+
+//        exit(EXIT_FAILURE);
+    }
+        if(errors > 0) {
+            printf("Errors: %d\n",errors);
+ //           readFileUnsigned(gold, goldFile, size); ler gold
+        } else {
+            printf(".");
+        }
+  //      readFileUnsigned(data, inputFile, size); ler input
+
+    return 0;
+}
+
 // Params ---------------------------------------------------------------------
 struct Params {
 
@@ -185,7 +233,16 @@ int main(int argc, char **argv) {
     Timer        timer;
     cl_int       clStatus;
 
-printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_items,p.n_work_groups,p.alpha,p.n_threads);
+printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_items, p.n_work_groups,p.alpha,p.n_threads);
+
+
+#ifdef LOGS
+    set_iter_interval_print(10);
+    char test_info[300];
+    snprintf(test_info, 300, "-i %d -g %d -a %.2f -t %d",p.n_work_items, p.n_work_groups,p.alpha,p.n_threads);
+    start_log_file("openclBezierSurface", test_info);
+#endif
+
 
     // Allocate
     timer.start("Allocation");
@@ -195,11 +252,10 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     int n_tasks_j = divceil(p.out_size_j, p.n_work_items);
     int n_tasks   = n_tasks_i * n_tasks_j;
 #ifdef OCL_2_0
-	printf("Sou OpenCL 2.0\n");
-    XYZ *            h_in     = (XYZ *)clSVMAlloc(ocl.clContext, CL_MEM_SVM_FINE_GRAIN_BUFFER, in_size, 0);
-    XYZ *            h_out    = (XYZ *)clSVMAlloc(ocl.clContext, CL_MEM_SVM_FINE_GRAIN_BUFFER, out_size, 0);
-    XYZ *            d_in     = h_in;
-    XYZ *            d_out    = h_out;
+    XYZ *h_in     = (XYZ *)clSVMAlloc(ocl.clContext, CL_MEM_SVM_FINE_GRAIN_BUFFER, in_size, 0);
+    XYZ *h_out    = (XYZ *)clSVMAlloc(ocl.clContext, CL_MEM_SVM_FINE_GRAIN_BUFFER, out_size, 0);
+    XYZ *d_in     = h_in;
+    XYZ *d_out    = h_out;
     std::atomic_int *worklist = (std::atomic_int *)clSVMAlloc(
         ocl.clContext, CL_MEM_SVM_FINE_GRAIN_BUFFER | CL_MEM_SVM_ATOMICS, sizeof(std::atomic_int), 0);
     ALLOC_ERR(h_in, h_out, worklist);
@@ -207,6 +263,8 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     XYZ *  h_in        = (XYZ *)malloc(in_size);
     XYZ *  h_out       = (XYZ *)malloc(out_size);
     XYZ *  h_out_merge = (XYZ *)malloc(out_size);
+    XYZ *  gold = (XYZ *)malloc(out_size);
+
     cl_mem d_in  = clCreateBuffer(ocl.clContext, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, in_size, NULL, &clStatus);
     cl_mem d_out = clCreateBuffer(ocl.clContext, CL_MEM_READ_WRITE | CL_MEM_ALLOC_HOST_PTR, out_size, NULL, &clStatus);
     CL_ERR();
@@ -221,6 +279,20 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     const int max_wi = ocl.max_work_items(ocl.clKernel);
 //	printf("Maximum Work Items %d\n",max_wi);
     read_input(h_in, p);
+
+// *********************** Lendo GOLD   *****************************
+    char filename[100];
+    snprintf(filename, 100, "gold_%d",p.out_size_i); // Gold com a resolução 
+    FILE *finput;
+    if (finput = fopen(filename, "rb")) {
+        fread(gold, out_size, 1 , finput);
+    } else {
+        printf("Error reading gold file");
+        exit(1);
+    }
+	fclose(finput);	
+
+
     clFinish(ocl.clCommandQueue);
     timer.stop("Initialization");
     timer.print("Initialization", 1);
@@ -235,8 +307,8 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     timer.print("Copy To Device", 1);
 #endif
 
-    // Loop over main kernel
-    for(int rep = 0; rep < p.n_warmup + p.n_reps; ++rep) {
+    // Loop over main kernel -- Vamos executar somente uma vez o kernel
+   // for(int rep = 0; rep < p.n_warmup + p.n_reps; ++rep) {
 
 // Reset
 #ifdef OCL_2_0
@@ -245,8 +317,8 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
         }
 #endif
 
-        if(rep >= p.n_warmup)
-            timer.start("Kernel");
+        //if(rep >= p.n_warmup)
+        timer.start("Kernel");
 
         // Launch GPU threads
         clSetKernelArg(ocl.clKernel, 0, sizeof(int), &n_tasks);
@@ -272,6 +344,9 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
         if(p.n_work_groups > 0) {
             assert(ls[0] <= max_wi && 
                 "The work-group size is greater than the maximum work-group size that can be used to execute this kernel");
+#ifdef LOGS
+        start_iteration();
+#endif
             clStatus = clEnqueueNDRangeKernel(ocl.clCommandQueue, ocl.clKernel, 2, NULL, gs, ls, 0, NULL, NULL);
             CL_ERR();
         }
@@ -288,10 +363,15 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
         clFinish(ocl.clCommandQueue);
         main_thread.join();
 
-        if(rep >= p.n_warmup)
-            timer.stop("Kernel");
-    }
-    timer.print("Kernel", p.n_reps);
+        //if(rep >= p.n_warmup)
+       timer.stop("Kernel");
+   // }
+    timer.print("Kernel",1);
+
+
+#ifdef LOGS
+        end_iteration();
+#endif
 
 #ifndef OCL_2_0
     // Copy back
@@ -322,7 +402,14 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 #ifdef OCL_2_0
     verify(h_in, h_out, p.in_size_i, p.in_size_j, p.out_size_i, p.out_size_j);
 #else
-    verify(h_in, h_out_merge, p.in_size_i, p.in_size_j, p.out_size_i, p.out_size_j);
+
+    new_compare_output(h_out_merge, gold, p.in_size_i, p.in_size_j, p.out_size_i, p.out_size_j);
+
+
+#endif
+
+#ifdef LOGS
+    end_log_file();
 #endif
 
     // Free memory

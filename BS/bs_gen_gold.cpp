@@ -1,11 +1,8 @@
-
-#include "kernel.h"
 #include "support/common.h"
-#include "support/verify.h"
 #include <unistd.h>
-#include <thread>
-#include <assert.h>
 #include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Params ---------------------------------------------------------------------
 struct Params {
@@ -147,7 +144,7 @@ int main(int argc, char **argv) {
 
 	FILE *finput;
     char filename[100];
-    snprintf(filename, 100, "gold_%d",p.n); // Gold com a resolução 
+    snprintf(filename, 100, "gold_%d",p.out_size_i); // Gold com a resolução 
     if (finput = fopen(filename, "wb")) {
         fwrite(gold, out_size, 1 , finput);
     } else {

@@ -72,7 +72,7 @@ all: $(EXE)
 
 $(EXE): $(OBJECTS)
 	$(CXX) $(CXX_FLAGS) $(OBJECTS) $(LIB) -o $(EXE)
-
+	$(CXX) $(CXX_FLAGS) bs_gen_gold.cpp -o gen_gold	
 clean:
 	rm -f $(EXE) *.o *.d
 
