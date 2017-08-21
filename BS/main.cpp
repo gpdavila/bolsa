@@ -292,6 +292,9 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     clFinish(ocl.clCommandQueue);
     timer.stop("Initialization");
     //timer.print("Initialization", 1);
+    // Loop over main kernel -- Vamos executar somente uma vez o kernel
+    for(int rep = 0; rep < p.n_reps; rep++) {
+
 
 #ifndef OCL_2_0
     // Copy to device
@@ -303,8 +306,6 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     //timer.print("Copy To Device", 1);
 #endif
 
-    // Loop over main kernel -- Vamos executar somente uma vez o kernel
-    for(int rep = 0; rep < p.n_reps; rep++) {
 
 // Reset
 #ifdef OCL_2_0
