@@ -67,7 +67,7 @@ inline int new_compare_output(XYZ *outp, XYZ *outpCPU, int NI, int NJ, int RESOL
         }
     }
     L1norm2 = (double)(sum_delta2 / sum_ref2);
-	L1norm2 = 1;
+//	L1norm2 = 1;
     if(L1norm2 >= 1e-6){
         errors++;
         char error_detail[200];
@@ -295,7 +295,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
     // Loop over main kernel -- Vamos executar somente uma vez o kernel
     for(int rep = 0; rep < p.n_reps; rep++) {
 
-
+//printf("Rep\n");
 #ifndef OCL_2_0
     // Copy to device
     timer.start("Copy To Device");
