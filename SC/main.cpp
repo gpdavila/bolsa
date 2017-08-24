@@ -465,6 +465,6 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     timer.stop("Deallocation");
    // timer.print("Deallocation", 1);
 
-    printf("Test Passed\n");
+    //printf("Test Passed\n");
     return 0;
 }
