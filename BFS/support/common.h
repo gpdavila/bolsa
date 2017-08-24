@@ -49,12 +49,12 @@
 #define W_QUEUE_SIZE 1600
 
 typedef struct {
-    int x;
-    int y;
+    long x;
+    long y;
 } Node;
 typedef struct {
-    int x;
-    int y;
+    long x;
+    long y;
 } Edge;
 
 #endif
