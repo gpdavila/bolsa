@@ -161,9 +161,9 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
 
     	if(sum_ref2 == 0)
     	    sum_ref2 = 1; //In case percent=0
-
+//		printf("%f\n",sum_delta2_x)
 		sum_delta2_x = std::abs(outp[i] - outpCPU[i]) / sum_ref2 ;
-		printf("%f\n",sum_delta2_x);
+//		printf("%f\n",sum_delta2_x);
 //		if(sum_ref2==0)
 //			printf("Dividido por zero\n");
 //sum_delta2_x=1;
