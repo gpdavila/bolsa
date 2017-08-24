@@ -220,7 +220,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_wor
 #ifdef LOGS
     set_iter_interval_print(10);
     char test_info[300];
-    snprintf(test_info, 300, "-i %d -g %d -a %.2f -t %d",p.n_work_items, p.n_work_groups,p.alpha,p.n_threads);
+    snprintf(test_info, 300, "-i %d -g %d -a %.2f -t %d -n %d",p.n_work_items, p.n_work_groups,p.alpha,p.n_threads, p.out_size_i);
     start_log_file("openclBezierSurface", test_info);
 	//printf("Com LOG\n");
 #endif

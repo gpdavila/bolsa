@@ -44,6 +44,12 @@
 #include <thread>
 #include <assert.h>
 
+//*****************************************  LOG  ***********************************//
+#ifdef LOGS
+#include "../include/log_helper.h"
+#endif
+//************************************************************************************//
+
 // Params ---------------------------------------------------------------------
 struct Params {
 
@@ -207,6 +213,16 @@ int main(int argc, char **argv) {
 	int err = 0;
 
 printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.device, p.n_work_items,p.n_work_groups,p.alpha,p.n_threads,p.in_size,p.compaction_factor);
+
+#ifdef LOGS
+    set_iter_interval_print(10);
+    char test_info[300];
+    snprintf(test_info, 300, "-i %d -g %d -a %.2f -t %d -n %d -c %d",p.n_work_items, p.n_work_groups,p.alpha,p.n_threads,p.in_size,p.compaction_factor);
+    start_log_file("openclStreamCompaction", test_info);
+	//printf("Com LOG\n");
+#endif
+
+
     // Allocate buffers
     timer.start("Allocation");
     const int n_tasks     = divceil(p.in_size, p.n_work_items * REGS);
@@ -230,7 +246,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     cl_mem           d_flags = clCreateBuffer(ocl.clContext, CL_MEM_READ_WRITE, n_flags * sizeof(int), NULL, &clStatus);
     CL_ERR();
 #endif
-    T *h_in_backup = (T *)malloc(p.in_size * sizeof(T));
+    T *h_in_backup = (T *)malloc(p.in_size * sizeof(T)); // Este é o gold
     ALLOC_ERR(h_in_out, h_flags, h_in_backup);
     clFinish(ocl.clCommandQueue);
     timer.stop("Allocation");
@@ -264,6 +280,9 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
 
     //memcpy(h_in_backup, h_in_out, p.in_size * sizeof(T)); // Backup for reuse across iterations
 
+    // Loop over main kernel
+    for(int rep = 0; rep < p.n_reps; rep++) {
+
 #ifndef OCL_2_0
     // Copy to device
     timer.start("Copy To Device");
@@ -277,10 +296,6 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     timer.stop("Copy To Device");
     timer.print("Copy To Device", 1);
 #endif
-
-    // Loop over main kernel
-    for(int rep = 0; rep < p.n_warmup + p.n_reps; rep++) {
-
         // Reset
         memcpy(h_in_out, h_in_backup, p.in_size * sizeof(T));
         memset(h_flags, 0, n_flags * sizeof(atomic_int));
@@ -301,7 +316,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
         clFinish(ocl.clCommandQueue);
 #endif
 
-        if(rep >= p.n_warmup)
+    //   if(rep >= p.n_warmup)
             timer.start("Kernel");
 
         clSetKernelArg(ocl.clKernel, 0, sizeof(int), &p.in_size);
@@ -328,6 +343,10 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
         if(gs[0] > 0) {
             assert(ls[0] <= max_wi && 
                 "The work-group size is greater than the maximum work-group size that can be used to execute this kernel");
+#ifdef LOGS
+        start_iteration();
+#endif
+
             clStatus = clEnqueueNDRangeKernel(ocl.clCommandQueue, ocl.clKernel, 1, NULL, gs, ls, 0, NULL, NULL);
             CL_ERR();
         }
@@ -344,10 +363,13 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
         clFinish(ocl.clCommandQueue);
         main_thread.join();
 
-        if(rep >= p.n_warmup)
+//        if(rep >= p.n_warmup)
             timer.stop("Kernel");
-    }
+   // }
     timer.print("Kernel", p.n_reps);
+#ifdef LOGS
+        end_iteration();
+#endif
 
 #ifndef OCL_2_0
     // Copy back
@@ -369,8 +391,24 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     err = new_compare_output(h_in_out, h_in_backup, (p.in_size * p.compaction_factor) / 100);
 
 // Aqui ver se houve erros 
-
-
+        if(err > 0) {
+            printf("Errors: %d\n",err);
+			snprintf(filename, 100, "gold_%d",p.in_size); // Gold com a resolução 
+			if (finput = fopen(filename, "rb")) {
+				fread(h_in_backup,p.in_size * sizeof(T), 1 , finput);
+			} else {
+				printf("Error reading gold file\n");
+				exit(1);
+			}
+			fclose(finput);	
+        } else {
+            printf(".");
+        }
+    	new_read_input(h_in_out, p);
+	}
+#ifdef LOGS
+    end_log_file();
+#endif
 
     // Free memory
     timer.start("Deallocation");
