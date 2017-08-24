@@ -160,8 +160,11 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
     if(sum_ref2 == 0)
         sum_ref2 = 1; //In case percent=0
     L1norm2      = (double)(sum_delta2 / sum_ref2);
+	printf("Norm:%f\n",L1norm2);
+	printf("Norm:%.10e\n",L1norm2);
     if(L1norm2 >= 1e-6){
 	printf("Norm:%f\n",L1norm2);
+	printf("Norm:%.10e\n",L1norm2);
         printf("Test failed\n");
         exit(EXIT_FAILURE);
     }
