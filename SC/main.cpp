@@ -149,6 +149,8 @@ struct Params {
 
 
 inline int new_compare_output(T *outp, T *outpCPU, int size) {
+	
+	int errors=0;
     double sum_delta2, sum_ref2, L1norm2;
     sum_delta2 = 0;
     sum_ref2   = 0;
@@ -160,13 +162,19 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
     if(sum_ref2 == 0)
         sum_ref2 = 1; //In case percent=0
     L1norm2      = (double)(sum_delta2 / sum_ref2);
-	printf("Norm:%f\n",L1norm2);
-	printf("Norm:%.10e\n",L1norm2);
+
     if(L1norm2 >= 1e-6){
-	printf("Norm:%f\n",L1norm2);
-	printf("Norm:%.10e\n",L1norm2);
-        printf("Test failed\n");
-        exit(EXIT_FAILURE);
+        errors++;
+        char error_detail[200];
+        sprintf(error_detail,"Delta:%f Ref:%f L1norm2:%f",sum_delta2 ,sum_ref2 ,L1norm2);
+#ifdef LOGS
+        log_error_detail(error_detail);
+#endif			
+#ifdef LOGS
+        log_error_count(errors);
+#endif
+        //printf("Test failed\n");
+        //exit(EXIT_FAILURE);
     }
     return 0;
 }
