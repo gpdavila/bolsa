@@ -165,7 +165,7 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
 		sum_delta2_x = std::abs(outp[i] - outpCPU[i]) / sum_ref2 ;
 		if(sum_ref2==0)
 			printf("Dividido por zero\n");
-sum_delta2_x=1;
+//sum_delta2_x=1;
 			if(sum_delta2_x >= 1e-6 ){
 		        errors++;
 #ifdef LOGS
