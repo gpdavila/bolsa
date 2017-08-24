@@ -60,7 +60,7 @@ inline long verify(std::atomic_long *h_cost, long num_of_nodes, const char *file
         long j, cost;
         fscanf(fpo, "%ld %ld", &j, &cost);
         if(i != j || h_cost[i].load() != cost) {
-            printf("Computed node %d cost (%ld != %ld) does not match the expected value\n", i, h_cost[i].load(), cost);
+            printf("Computed node %ld cost (%ld != %ld) does not match the expected value\n", i, h_cost[i].load(), cost);
             exit(EXIT_FAILURE);
         }
     }
@@ -76,7 +76,7 @@ inline long create_output(std::atomic_long *h_cost, long num_of_nodes) {
         printf("Error Creating output file\n");
         exit(EXIT_FAILURE);
     }
-	fprintf(fpo,"%d\n",num_of_nodes);	
+	fprintf(fpo,"%ld\n",num_of_nodes);	
     // cost of nodes in the output
     for(long i = 0; i < num_of_nodes; i++) {
 		// escreve i no arquivo e hcost 
