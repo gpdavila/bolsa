@@ -159,8 +159,8 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
 //        sum_delta2 += std::abs(outp[i] - outpCPU[i]);
           sum_ref2 = std::abs(outpCPU[i]);
 
-    	//if(sum_ref2 == 0)
-    	    //sum_ref2 = 1; //In case percent=0
+    	if(sum_ref2 == 0)
+    	    sum_ref2 = 1; //In case percent=0
 
 		sum_delta2_x = std::abs(outp[i] - outpCPU[i]) / sum_ref2 ;
 //		if(sum_ref2==0)
