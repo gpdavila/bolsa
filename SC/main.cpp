@@ -141,7 +141,43 @@ struct Params {
     }
 };
 
+
+inline int new_compare_output(T *outp, T *outpCPU, int size) {
+    double sum_delta2, sum_ref2, L1norm2;
+    sum_delta2 = 0;
+    sum_ref2   = 0;
+    L1norm2    = 0;
+    for(int i = 0; i < size; i++) {
+        sum_delta2 += std::abs(outp[i] - outpCPU[i]);
+        sum_ref2 += std::abs(outpCPU[i]);
+    }
+    if(sum_ref2 == 0)
+        sum_ref2 = 1; //In case percent=0
+    L1norm2      = (double)(sum_delta2 / sum_ref2);
+    if(L1norm2 >= 1e-6){
+        printf("Test failed\n");
+        exit(EXIT_FAILURE);
+    }
+    return 0;
+}
 // Input Data -----------------------------------------------------------------
+void new_read_input(T *input, const Params &p) {
+
+    FILE *f = NULL;
+    char filename[100];
+    snprintf(filename, 100, "input_%d",p.in_size); // Gold com a resolução 
+    const int n_tasks     = divceil(p.in_size, p.n_work_items * REGS);
+    int in_size   = n_tasks * p.n_work_items * REGS * sizeof(T);
+    FILE *finput;
+    if (finput = fopen(filename, "rb")) {
+        fread(input, in_size, 1 , finput);
+    } else {
+        printf("Error reading input file\n");
+        exit(1);
+    }
+	fclose(finput);	
+}
+
 void read_input(T *input, const Params &p) {
 
     // Initialize the host input vectors
@@ -168,6 +204,7 @@ int main(int argc, char **argv) {
     OpenCLSetup  ocl(p.platform, p.device);
     Timer        timer;
     cl_int       clStatus;
+	int err = 0;
 
 printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.device, p.n_work_items,p.n_work_groups,p.alpha,p.n_threads,p.in_size,p.compaction_factor);
     // Allocate buffers
@@ -202,7 +239,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     // Initialize
     timer.start("Initialization");
     const int max_wi = ocl.max_work_items(ocl.clKernel);
-    read_input(h_in_out, p);
+    new_read_input(h_in_out, p);
 #ifdef OCL_2_0
     h_flags[0].store(1);
 #else
@@ -211,7 +248,21 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
 #endif
     timer.stop("Initialization");
     timer.print("Initialization", 1);
-    memcpy(h_in_backup, h_in_out, p.in_size * sizeof(T)); // Backup for reuse across iterations
+
+// Ler gold
+// *********************** Lendo GOLD   *****************************
+    char filename[100];
+    snprintf(filename, 100, "gold_%d",p.in_size); // Gold com a resolução 
+    FILE *finput;
+    if (finput = fopen(filename, "rb")) {
+        fread(h_in_backup, p.in_size * sizeof(T), 1 , finput);
+    } else {
+        printf("Error reading gold file\n");
+        exit(1);
+    }
+	fclose(finput);	
+
+    //memcpy(h_in_backup, h_in_out, p.in_size * sizeof(T)); // Backup for reuse across iterations
 
 #ifndef OCL_2_0
     // Copy to device
@@ -314,7 +365,12 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
 #endif
 
     // Verify answer
-    verify(h_in_out, h_in_backup, p.in_size, p.remove_value, (p.in_size * p.compaction_factor) / 100);
+   // verify(h_in_out, h_in_backup, p.in_size, p.remove_value, (p.in_size * p.compaction_factor) / 100);
+    err = new_compare_output(h_in_out, h_in_backup, (p.in_size * p.compaction_factor) / 100);
+
+// Aqui ver se houve erros 
+
+
 
     // Free memory
     timer.start("Deallocation");
