@@ -58,7 +58,7 @@ void new_read_input(T *input, const Params &p) {
 
     FILE *f = NULL;
     char filename[100];
-    snprintf(filename, 100, "input_%d",p.in_size); // Gold com a resolução 
+    snprintf(filename, 100, "input_%d_%d_%d",p.in_size,p.n_work_items,p.compaction_factor); // Gold com a resolução 
     const int n_tasks     = divceil(p.in_size, p.n_work_items * REGS);
     int in_size   = n_tasks * p.n_work_items * REGS * sizeof(T);
     FILE *finput;
@@ -104,7 +104,7 @@ int main(int argc, char **argv) {
 
 	FILE *finput;
     char filename[100];
-    snprintf(filename, 100, "gold_%d",p.in_size); // Gold com a resolução 
+    snprintf(filename, 100, "gold_%d_%d_%d",p.in_size,p.n_work_items,p.compaction_factor); // Gold com a resolução 
     if (finput = fopen(filename, "wb")) {
         fwrite(h_in_out, in_size, 1 , finput);
     } else {
