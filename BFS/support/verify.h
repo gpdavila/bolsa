@@ -83,7 +83,7 @@ inline int create_output(std::atomic_int *h_cost, int num_of_nodes) {
 	fprintf(fpo,"%d %d\n",i,h_cost[i].load());
    }
  
-
+printf("sai func \n");
     fclose(fpo);
     return 0;
 }
