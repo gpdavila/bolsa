@@ -163,8 +163,8 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
     	    //sum_ref2 = 1; //In case percent=0
 
 		sum_delta2_x = std::abs(outp[i] - outpCPU[i]) / sum_ref2 ;
-		if(sum_ref2==0)
-			printf("Dividido por zero\n");
+//		if(sum_ref2==0)
+//			printf("Dividido por zero\n");
 //sum_delta2_x=1;
 			if(sum_delta2_x >= 1e-6 ){
 		        errors++;
@@ -282,7 +282,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     ALLOC_ERR(h_in_out, h_flags, h_in_backup);
     clFinish(ocl.clCommandQueue);
     timer.stop("Allocation");
-    timer.print("Allocation", 1);
+    //timer.print("Allocation", 1);
 
     // Initialize
     timer.start("Initialization");
@@ -295,7 +295,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     h_flags[n_tasks_cpu] = 1;
 #endif
     timer.stop("Initialization");
-    timer.print("Initialization", 1);
+    //timer.print("Initialization", 1);
 
 // Ler gold
 // *********************** Lendo GOLD   *****************************
@@ -326,7 +326,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     CL_ERR();
     clFinish(ocl.clCommandQueue);
     timer.stop("Copy To Device");
-    timer.print("Copy To Device", 1);
+    //timer.print("Copy To Device", 1);
 #endif
         // Reset
         //memcpy(h_in_out, h_in_backup, p.in_size * sizeof(T));
@@ -398,7 +398,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
 //        if(rep >= p.n_warmup)
             timer.stop("Kernel");
    // }
-    timer.print("Kernel", p.n_reps);
+    //timer.print("Kernel", p.n_reps);
 #ifdef LOGS
         end_iteration();
 #endif
@@ -415,7 +415,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     }
     clFinish(ocl.clCommandQueue);
     timer.stop("Copy Back and Merge");
-    timer.print("Copy Back and Merge", 1);
+    //timer.print("Copy Back and Merge", 1);
 #endif
 
     // Verify answer
@@ -463,7 +463,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     free(h_in_backup);
     ocl.release();
     timer.stop("Deallocation");
-    timer.print("Deallocation", 1);
+   // timer.print("Deallocation", 1);
 
     printf("Test Passed\n");
     return 0;
