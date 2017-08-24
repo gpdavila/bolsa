@@ -151,19 +151,38 @@ struct Params {
 inline int new_compare_output(T *outp, T *outpCPU, int size) {
 	
 	int errors=0;
-    double sum_delta2, sum_ref2, L1norm2;
+    double sum_delta2,sum_delta2_x, sum_ref2, L1norm2;
     sum_delta2 = 0;
     sum_ref2   = 0;
     L1norm2    = 0;
     for(int i = 0; i < size; i++) {
-        sum_delta2 += std::abs(outp[i] - outpCPU[i]);
-        sum_ref2 += std::abs(outpCPU[i]);
+//        sum_delta2 += std::abs(outp[i] - outpCPU[i]);
+          sum_ref2 = std::abs(outpCPU[i]);
+
+    	//if(sum_ref2 == 0)
+    	    //sum_ref2 = 1; //In case percent=0
+
+		sum_delta2_x = std::abs(outp[i] - outpCPU[i]) / sum_ref2 ;
+		if(sum_ref2==0)
+			printf("Dividido por zero\n");
+
+			if(sum_delta2_x >= 1e-6 ){
+		        errors++;
+#ifdef LOGS
+		        char error_detail[200];
+        		sprintf(error_detail,"X, p: [%d], r: %f, e: %f",i,outp[i],outpCPU[i] );
+
+       			 log_error_detail(error_detail);
+#endif			
+
+			}
     }
-    if(sum_ref2 == 0)
+
+    /*if(sum_ref2 == 0)
         sum_ref2 = 1; //In case percent=0
     L1norm2      = (double)(sum_delta2 / sum_ref2);
-
-    if(L1norm2 >= 1e-6){
+*/
+/*    if(L1norm2 >= 1e-6){
         errors++;
         char error_detail[200];
         sprintf(error_detail,"Delta:%f Ref:%f L1norm2:%f",sum_delta2 ,sum_ref2 ,L1norm2);
@@ -176,7 +195,8 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
         //printf("Test failed\n");
         //exit(EXIT_FAILURE);
     }
-    return 0;
+*/
+    return errors;
 }
 // Input Data -----------------------------------------------------------------
 void new_read_input(T *input, const Params &p) {
@@ -417,6 +437,11 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
             printf(".");
         }
     	new_read_input(h_in_out, p);
+
+#ifdef LOGS
+        log_error_count(err);
+#endif
+
 	}
 #ifdef LOGS
     end_log_file();
