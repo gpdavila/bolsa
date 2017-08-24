@@ -161,6 +161,7 @@ inline int new_compare_output(T *outp, T *outpCPU, int size) {
         sum_ref2 = 1; //In case percent=0
     L1norm2      = (double)(sum_delta2 / sum_ref2);
     if(L1norm2 >= 1e-6){
+	printf("Norm:%f\n",L1norm2);
         printf("Test failed\n");
         exit(EXIT_FAILURE);
     }
@@ -297,7 +298,7 @@ printf("-p %d -d %d -i %d -g %d -a %.2f -t %d -n %d -c %d \n",p.platform , p.dev
     timer.print("Copy To Device", 1);
 #endif
         // Reset
-        memcpy(h_in_out, h_in_backup, p.in_size * sizeof(T));
+        //memcpy(h_in_out, h_in_backup, p.in_size * sizeof(T));
         memset(h_flags, 0, n_flags * sizeof(atomic_int));
 #ifdef OCL_2_0
         h_flags[0].store(1);
