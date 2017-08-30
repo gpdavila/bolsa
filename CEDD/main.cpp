@@ -77,7 +77,7 @@ struct Params {
         file_name       = "input/peppa/";
         comparison_file = "output/peppa/";
         int opt;
-        while((opt = getopt(argc, argv, "hp:d:i:t:w:r:a:f:c:x:l")) >= 0) {
+        while((opt = getopt(argc, argv, "hp:d:i:t:w:r:a:f:c:xl:")) >= 0) {
             switch(opt) {
             case 'h':
                 usage();
@@ -292,16 +292,19 @@ printf("-p %d -d %d -i %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_item
     timer.stop("Initialization");
     timer.print("Initialization", 1);
 
-    timer.start("Total Proxies");
+    //timer.start("Total Proxies");
 
 
-    CoarseGrainPartitioner partitioner = partitioner_create(n_frames, p.alpha, worklist);
-    std::vector<std::thread> proxy_threads;
+
 
 for(int rep = 0; rep < p.loop; rep++) {
+    timer.start("Total Proxies");
+    CoarseGrainPartitioner partitioner = partitioner_create(n_frames, p.alpha, worklist);
+    std::vector<std::thread> proxy_threads;
 #ifdef LOGS
         start_iteration();
 #endif
+	printf("Nova it\n");
     for(int proxy_tid = 0; proxy_tid < 2; proxy_tid++) {
         proxy_threads.push_back(std::thread([&, proxy_tid]() {
 
