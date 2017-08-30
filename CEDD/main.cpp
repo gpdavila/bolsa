@@ -63,7 +63,7 @@ struct Params {
     const char *file_name;
     const char *comparison_file;
     int         display = 0;
-	int 		loop = 1; 
+	int 		loop; 
 
     Params(int argc, char **argv) {
         platform        = 0;
@@ -73,10 +73,11 @@ struct Params {
         n_warmup        = 10;
         n_reps          = 100;
         alpha           = 0.2;
+		loop 			= 100;
         file_name       = "input/peppa/";
         comparison_file = "output/peppa/";
         int opt;
-        while((opt = getopt(argc, argv, "hp:d:i:t:w:r:a:f:c:x")) >= 0) {
+        while((opt = getopt(argc, argv, "hp:d:i:t:w:r:a:f:c:x:l")) >= 0) {
             switch(opt) {
             case 'h':
                 usage();
