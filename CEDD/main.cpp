@@ -143,7 +143,7 @@ struct Params {
 
 inline int new_compare_output(unsigned char **all_out_frames, int image_size, const char *file_name, int num_frames, int rowsc, int colsc, int rowsc_, int colsc_) {
 
-	printf("Entrei compara\n");
+	//printf("Entrei compara\n");
     int count_error = 0;
     for(int i = 0; i < num_frames; i++) {
 
@@ -304,7 +304,7 @@ for(int rep = 0; rep < p.loop; rep++) {
 #ifdef LOGS
         start_iteration();
 #endif
-	printf("Nova it\n");
+	//printf("Nova it\n");
     for(int proxy_tid = 0; proxy_tid < 2; proxy_tid++) {
         proxy_threads.push_back(std::thread([&, proxy_tid]() {
 
@@ -491,7 +491,7 @@ err = new_compare_output(all_out_frames, in_size, p.comparison_file, p.n_warmup 
 #ifdef LOGS
         log_error_count(err);
 #endif
-printf("Acabei uma it\n");
+//printf("Acabei uma it\n");
 }
 #ifdef LOGS
     end_log_file();
