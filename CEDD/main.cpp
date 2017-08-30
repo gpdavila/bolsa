@@ -169,8 +169,8 @@ inline int new_compare_output(unsigned char **all_out_frames, int image_size, co
 
                         count_error++;
 #ifdef LOGS
-		        char error_detail[200];
-        		sprintf(error_detail,"p: [%d, %d], r: %d, e: %d",r,c,(int)all_out_frames[i][r*colsc+c],pix);
+		        char error_detail[250];
+        		sprintf(error_detail,"p: [%d, %d],r: %d,e: %d,IS:%d NF%d",r,c,(int)all_out_frames[i][r*colsc+c],pix,image_size, num_frames);
 
        			 log_error_detail(error_detail);
 #endif
@@ -448,17 +448,17 @@ for(int rep = 0; rep < p.loop; rep++) {
         end_iteration();
 #endif
     timer.stop("Total Proxies");
-    timer.print("Total Proxies", 1);
-    printf("CPU Proxy:\n");
-    printf("\t");
-    timer.print("CPU Proxy: Kernel", 1);
-    printf("GPU Proxy:\n");
-    printf("\t");
-    timer.print("GPU Proxy: Copy To Device", 1);
-    printf("\t");
-    timer.print("GPU Proxy: Kernel", 1);
-    printf("\t");
-    timer.print("GPU Proxy: Copy Back", 1);
+    //timer.print("Total Proxies", 1);
+    //printf("CPU Proxy:\n");
+    //printf("\t");
+    //timer.print("CPU Proxy: Kernel", 1);
+    //printf("GPU Proxy:\n");
+    //printf("\t");
+    //timer.print("GPU Proxy: Copy To Device", 1);
+    //printf("\t");
+    //timer.print("GPU Proxy: Kernel", 1);
+    //printf("\t");
+    //timer.print("GPU Proxy: Copy Back", 1);
 
 #ifdef CHAI_OPENCV
     // Display the result
@@ -496,6 +496,18 @@ printf("Acabei uma it\n");
 #ifdef LOGS
     end_log_file();
 #endif
+
+    timer.print("Total Proxies",  p.loop);
+    printf("CPU Proxy:\n");
+    printf("\t");
+    timer.print("CPU Proxy: Kernel",  p.loop);
+    printf("GPU Proxy:\n");
+    printf("\t");
+    timer.print("GPU Proxy: Copy To Device",  p.loop);
+    printf("\t");
+    timer.print("GPU Proxy: Kernel",  p.loop);
+    printf("\t");
+    timer.print("GPU Proxy: Copy Back",  p.loop);
 
 
     // Release buffers
