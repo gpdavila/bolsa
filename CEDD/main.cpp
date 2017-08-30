@@ -63,7 +63,7 @@ struct Params {
     const char *file_name;
     const char *comparison_file;
     int         display = 0;
-	int 		loop = 100; 
+	int 		loop = 1; 
 
     Params(int argc, char **argv) {
         platform        = 0;
@@ -142,6 +142,7 @@ struct Params {
 
 inline int new_compare_output(unsigned char **all_out_frames, int image_size, const char *file_name, int num_frames, int rowsc, int colsc, int rowsc_, int colsc_) {
 
+	printf("Entrei compara\n");
     int count_error = 0;
     for(int i = 0; i < num_frames; i++) {
 
@@ -163,7 +164,16 @@ inline int new_compare_output(unsigned char **all_out_frames, int image_size, co
                 fscanf(out_file, "%d ", &pix);
                 if((int)all_out_frames[i][r*colsc+c] != pix) {
                     if(r > 3 && r < rowsc-32 && c > 3 && c < colsc-32){
+
+
                         count_error++;
+#ifdef LOGS
+		        char error_detail[200];
+        		sprintf(error_detail,"p: [%d, %d], r: %d, e: %d",r,c,(int)all_out_frames[i][r*colsc+c],pix);
+
+       			 log_error_detail(error_detail);
+#endif
+
                     }
                 }
             }
@@ -178,9 +188,9 @@ inline int new_compare_output(unsigned char **all_out_frames, int image_size, co
 
     if((float)count_error / (float)(image_size * num_frames) >= 1e-6){
         printf("Test failed\n");
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
-    return 0;
+    return count_error;
 }
 
 // Input Data -----------------------------------------------------------------
@@ -477,7 +487,7 @@ err = new_compare_output(all_out_frames, in_size, p.comparison_file, p.n_warmup 
 #ifdef LOGS
         log_error_count(err);
 #endif
-
+printf("Acabei uma it\n");
 }
 #ifdef LOGS
     end_log_file();
