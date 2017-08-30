@@ -44,6 +44,12 @@
 #include <thread>
 #include <assert.h>
 
+//*****************************************  LOG  ***********************************//
+#ifdef LOGS
+#include "../include/log_helper.h"
+#endif
+//************************************************************************************//
+
 // Params ---------------------------------------------------------------------
 struct Params {
 
@@ -57,6 +63,7 @@ struct Params {
     const char *file_name;
     const char *comparison_file;
     int         display = 0;
+	int 		loop = 100; 
 
     Params(int argc, char **argv) {
         platform        = 0;
@@ -85,6 +92,7 @@ struct Params {
             case 'f': file_name       = optarg; break;
             case 'c': comparison_file = optarg; break;
             case 'x': display         = 1; break;
+            case 'l': loop 			  = atoi(optarg); break;
             default:
                 fprintf(stderr, "\nUnrecognized option!\n");
                 usage();
@@ -118,6 +126,7 @@ struct Params {
                 "\n    -t <T>    # of host threads (default=4)"
                 "\n    -w <W>    # of untimed warmup iterations (default=10)"
                 "\n    -r <R>    # of timed repetition iterations (default=100)"
+                "\n    -l <R>    # radiation loop iterations (default=100)"
                 "\n"
                 "\nData-partitioning-specific options:"
                 "\n    -a <A>    fraction of input elements to process on host (default=0.2)"
@@ -130,6 +139,49 @@ struct Params {
                 "\n");
     }
 };
+
+inline int new_compare_output(unsigned char **all_out_frames, int image_size, const char *file_name, int num_frames, int rowsc, int colsc, int rowsc_, int colsc_) {
+
+    int count_error = 0;
+    for(int i = 0; i < num_frames; i++) {
+
+        // Compare to output file
+        char FileName[100];
+        sprintf(FileName, "%s%d.txt", file_name, i);
+        FILE *out_file = fopen(FileName, "r");
+        if(!out_file) {
+            printf("Error Reading output file\n");
+            return 1;
+        }
+#if PRINT
+        printf("Reading Output: %s\n", file_name);
+#endif
+
+        for(int r = 0; r < rowsc; r++) {
+            for(int c = 0; c < colsc; c++) {
+                int pix;
+                fscanf(out_file, "%d ", &pix);
+                if((int)all_out_frames[i][r*colsc+c] != pix) {
+                    if(r > 3 && r < rowsc-32 && c > 3 && c < colsc-32){
+                        count_error++;
+                    }
+                }
+            }
+            // Scan until end of row
+            if(colsc<colsc_) fscanf(out_file, "%*[^\n]\n");
+        }
+        // Scan until end of frame
+        for(int rr=rowsc;rr<rowsc_;rr++) fscanf(out_file, "%*[^\n]\n");
+
+        fclose(out_file);
+    }
+
+    if((float)count_error / (float)(image_size * num_frames) >= 1e-6){
+        printf("Test failed\n");
+        exit(EXIT_FAILURE);
+    }
+    return 0;
+}
 
 // Input Data -----------------------------------------------------------------
 void read_input(unsigned char** all_gray_frames, int &rowsc, int &colsc, int &in_size, const Params &p) {
@@ -165,7 +217,18 @@ int main(int argc, char **argv) {
     cl_int      clStatus;
     Timer       timer;
 
+	int err = 0;
+
 printf("-p %d -d %d -i %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_items,p.alpha,p.n_threads);
+
+#ifdef LOGS
+    set_iter_interval_print(10);
+    char test_info[300];
+    snprintf(test_info, 300, "-i %d -a %.2f -t %d -r %d -f %s ",p.n_work_items,p.alpha,p.n_threads,p.n_warmup+p.n_reps,p.file_name);
+    start_log_file("openclCannyEdgeDetection", test_info);
+	//printf("Com LOG\n");
+#endif
+
 
     // Initialize (part 1)
     timer.start("Initialization");
@@ -219,8 +282,15 @@ printf("-p %d -d %d -i %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_item
     timer.print("Initialization", 1);
 
     timer.start("Total Proxies");
+
+
     CoarseGrainPartitioner partitioner = partitioner_create(n_frames, p.alpha, worklist);
     std::vector<std::thread> proxy_threads;
+
+for(int rep = 0; rep < p.loop; rep++) {
+#ifdef LOGS
+        start_iteration();
+#endif
     for(int proxy_tid = 0; proxy_tid < 2; proxy_tid++) {
         proxy_threads.push_back(std::thread([&, proxy_tid]() {
 
@@ -360,6 +430,9 @@ printf("-p %d -d %d -i %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_item
     }
     std::for_each(proxy_threads.begin(), proxy_threads.end(), [](std::thread &t) { t.join(); });
     clFinish(ocl.clCommandQueue);
+#ifdef LOGS
+        end_iteration();
+#endif
     timer.stop("Total Proxies");
     timer.print("Total Proxies", 1);
     printf("CPU Proxy:\n");
@@ -388,7 +461,28 @@ printf("-p %d -d %d -i %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_item
 #endif
 
     // Verify answer
-    verify(all_out_frames, in_size, p.comparison_file, p.n_warmup + p.n_reps, rowsc, colsc, rowsc, colsc);
+
+
+//verify(all_out_frames, in_size, p.comparison_file, p.n_warmup + p.n_reps, rowsc, colsc, rowsc, colsc);
+
+err = new_compare_output(all_out_frames, in_size, p.comparison_file, p.n_warmup + p.n_reps, rowsc, colsc, rowsc, colsc);
+
+// Aqui ver se houve erros 
+        if(err > 0) {
+            printf("Errors: %d\n",err);
+        } else {
+            printf(".");
+        }
+    read_input(all_gray_frames, rowsc, colsc, in_size, p);
+#ifdef LOGS
+        log_error_count(err);
+#endif
+
+}
+#ifdef LOGS
+    end_log_file();
+#endif
+
 
     // Release buffers
     timer.start("Deallocation");
