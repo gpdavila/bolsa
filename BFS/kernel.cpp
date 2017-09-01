@@ -48,7 +48,7 @@ long atomic_maximum(std::atomic_long *maximum_value, long value) {
 
 // CPU threads-----------------------------------------------------------------
 void run_cpu_threads(Node *h_graph_nodes, Edge *h_graph_edges, std::atomic_long *cost, std::atomic_long *color,
-    long *q1, long *q2, long *n_t, std::atomic_int *head, std::atomic_int *tail,
+    long *q1, long *q2, long *n_t, std::atomic_long *head, std::atomic_long *tail,
     std::atomic_long *threads_end, std::atomic_long *threads_run, std::atomic_long *iter, long n_threads,
     long LIMIT, const long GPU) {
 ///////////////// Run CPU worker threads /////////////////////////////////
