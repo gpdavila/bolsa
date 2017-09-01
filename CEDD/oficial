@@ -18,7 +18,7 @@ do
         echo "Starting NUMTHREADS: $THREADS"
         	w_items=8
                 alpha=0.00
-        while [ $((w_items*w_items))-le $WORK_ITEMS_HW_LIMIT ]
+        while [ $((w_items*w_items)) -le $WORK_ITEMS_HW_LIMIT ]
         do
                 echo "W_items: $w_items"
                    #     while [ $w_groups -le $MAX_WORK_GROUP ]
