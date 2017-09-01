@@ -8,6 +8,7 @@ MAX_WORK_GROUP=16                # 8 GPU Cores ->  It's worthwhile testing bigge
 STEP=0.01
 result2=0.00
 REP=2489
+CADA=4
 mkdir results
 
 for THREADS in 1 2 3 4
