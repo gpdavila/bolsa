@@ -170,7 +170,7 @@ inline int new_compare_output(unsigned char **all_out_frames, int image_size, co
                         count_error++;
 #ifdef LOGS
 		        char error_detail[250];
-        		sprintf(error_detail,"p: [%d, %d],r: %d,e: %d,IS:%d NF%d",r,c,(int)all_out_frames[i][r*colsc+c],pix,image_size, num_frames);
+        		sprintf(error_detail,"p: [%d, %d],r: %d,e: %d,Image Size:%d, #Frame:%d, NTF%d",r,c,(int)all_out_frames[i][r*colsc+c],pix,image_size,i, num_frames);
 
        			 log_error_detail(error_detail);
 #endif
