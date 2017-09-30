@@ -72,3 +72,22 @@ inline int verify(std::atomic_int *h_cost, int num_of_nodes, const char *file_na
     fclose(fpo);
     return 0;
 }
+
+inline int create_output(std::atomic_int *h_cost, int num_of_nodes) {
+    // Compare to output file
+    FILE *fpo = fopen("saida_grafo", "w");
+    if(!fpo) {
+        printf("Error Creating output file\n");
+        exit(EXIT_FAILURE);
+    }
+	fprintf(fpo,"%d\n",num_of_nodes);	
+    // cost of nodes in the output
+    for(int i = 0; i < num_of_nodes; i++) {
+		// escreve i no arquivo e hcost 
+	fprintf(fpo,"%d %d\n",i,h_cost[i].load());
+   }
+ 
+//printf("sai func \n");
+    fclose(fpo);
+    return 0;
+}

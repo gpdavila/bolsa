@@ -43,6 +43,12 @@
 #include <thread>
 #include <assert.h>
 
+//*****************************************  LOG  ***********************************//
+#ifdef LOGS
+#include "../include/log_helper.h"
+#endif
+//************************************************************************************//
+
 // Params ---------------------------------------------------------------------
 struct Params {
 
@@ -118,6 +124,51 @@ struct Params {
     }
 };
 
+inline int new_verify(std::atomic_int *h_cost, int num_of_nodes, const char *file_name,int it_cpu, int it_gpu) {
+    int count_error = 0;
+// Compare to output file
+#if PRINT
+    printf("Comparing outputs...\n");
+#endif
+    FILE *fpo = fopen(file_name, "r");
+    if(!fpo) {
+        printf("Error Reading output file\n");
+        //exit(EXIT_FAILURE);
+    }
+#if PRINT
+    printf("Reading Output: %s\n", file_name);
+#endif
+
+    // the number of nodes in the output
+    int num_of_nodes_o = 0;
+    fscanf(fpo, "%d", &num_of_nodes_o);
+    if(num_of_nodes != num_of_nodes_o) {
+        printf("FAIL: Number of nodes does not match the expected value\n");
+        //exit(EXIT_FAILURE);
+    }
+
+    // cost of nodes in the output
+    for(int i = 0; i < num_of_nodes_o; i++) {
+        int j, cost;
+        fscanf(fpo, "%d %d", &j, &cost);
+        if(i != j || h_cost[i].load() * -1 != cost) {
+			  count_error++;	
+            printf("FAIL: Computed node %d cost (%d != %d) does not match the expected value\n", i, h_cost[i].load(), 
+                cost);
+#ifdef LOGS
+		        char error_detail[250];
+        		sprintf(error_detail,"Nodo: %ld,e:%ld, r:%ld, CPU:%d , GPU:%d \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);
+
+       			 log_error_detail(error_detail);
+#endif
+//            exit(EXIT_FAILURE);
+        }
+    }
+
+    fclose(fpo);
+    return count_error;
+}
+
 // Input Data -----------------------------------------------------------------
 void read_input_size(int &n_nodes, int &n_edges, const Params &p) {
     FILE *fp = fopen(p.file_name, "r");
@@ -138,7 +189,7 @@ void read_input(int &source, Node *&h_nodes, Edge *&h_edges, const Params &p) {
     fscanf(fp, "%d", &n_edges);
     fscanf(fp, "%d", &source);
     printf("Number of nodes = %d\t", n_nodes);
-    printf("Number of edges = %d\t", n_edges);
+    printf("Number of edges = %d\n", n_edges);
 
     // initalize the memory: Nodes
     for(int i = 0; i < n_nodes; i++) {
@@ -174,6 +225,16 @@ int main(int argc, char **argv) {
 	long it_gpu=0;
 	int err = 0;
 printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_items, p.n_work_groups,p.n_threads,p.file_name);
+
+#ifdef LOGS
+    set_iter_interval_print(10);
+    char test_info[500];
+    snprintf(test_info, 500, "-i %d -g %d -t %d -f %s \n",p.n_work_items, p.n_work_groups,p.n_threads, p.file_name);
+    start_log_file("openclSingleSourceShortestPath", test_info);
+	//printf("Com LOG\n");
+#endif
+
+
     // Allocate
     int n_nodes, n_edges;
     read_input_size(n_nodes, n_edges, p);
@@ -215,7 +276,11 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
     timer.start("Initialization");
     const int max_wi = ocl.max_work_items(ocl.clKernel);
     int source;
+
+
     read_input(source, h_nodes, h_edges, p);
+
+
     for(int i = 0; i < n_nodes; i++) {
         h_cost[i].store(INF);
     }
@@ -244,7 +309,8 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
     CL_ERR();
     timer.stop("Copy To Device");
 
-    for(int rep = 0; rep < p.n_reps + p.n_warmup; rep++) {
+// Loop over kernels
+    for(int rep = 0; rep < p.n_reps; rep++) {
 
         // Reset
         for(int i = 0; i < n_nodes; i++) {
@@ -254,6 +320,10 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
         for(int i = 0; i < n_nodes; i++) {
             h_color[i].store(WHITE);
         }
+
+		it_cpu=0;
+		it_gpu=0;
+
         h_tail[0].store(0);
         h_head[0].store(0);
         h_threads_end[0].store(0);
@@ -263,8 +333,11 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
         h_overflow[0] = 0;
         h_gray_shade[0].store(GRAY0);
 
-        if(rep >= p.n_warmup)
+        //if(rep >= p.n_warmup)
             timer.start("Kernel");
+#ifdef LOGS
+        start_iteration();
+#endif
 
         // Run first iteration in master CPU thread
         h_num_t[0] = 1;
@@ -289,7 +362,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
         h_threads_run[0].fetch_add(1);
         h_gray_shade[0].store(GRAY1);
         h_iter[0].fetch_add(1);
-        if(rep >= p.n_warmup)
+        //if(rep >= p.n_warmup)
             timer.stop("Kernel");
 
         // Pointers to input and output queues
@@ -306,8 +379,8 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 
             if((*h_num_t < p.switching_limit || GPU_EXEC == 0) &&
                 CPU_EXEC == 1) { // If the number of input queue elements is lower than switching_limit
-
-                if(rep >= p.n_warmup)
+				it_cpu=it_cpu+1;
+                //if(rep >= p.n_warmup)
                     timer.start("Kernel");
 
                 // Continue until switching_limit condition is not satisfied
@@ -336,14 +409,14 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                         h_gray_shade[0].store(GRAY1);
                 }
 
-                if(rep >= p.n_warmup)
+                //if(rep >= p.n_warmup)
                     timer.stop("Kernel");
 
             } else if((*h_num_t >= p.switching_limit || CPU_EXEC == 0) &&
                       GPU_EXEC ==
                           1) { // If the number of input queue elements is higher than or equal to switching_limit
-
-                if(rep >= p.n_warmup)
+				it_gpu=it_gpu+1;
+                //if(rep >= p.n_warmup)
                     timer.start("Copy To Device");
                 clStatus = clEnqueueWriteBuffer(
                     ocl.clCommandQueue, d_cost, CL_TRUE, 0, sizeof(int) * n_nodes, h_cost, 0, NULL, NULL);
@@ -363,10 +436,10 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                     clEnqueueWriteBuffer(ocl.clCommandQueue, d_iter, CL_TRUE, 0, sizeof(int), h_iter, 0, NULL, NULL);
                 clFinish(ocl.clCommandQueue);
                 CL_ERR();
-                if(rep >= p.n_warmup)
+                //if(rep >= p.n_warmup)
                     timer.stop("Copy To Device");
 
-                if(rep >= p.n_warmup)
+                //if(rep >= p.n_warmup)
                     timer.start("Kernel");
                 // Setting kernel arguments
                 clSetKernelArg(ocl.clKernel, 0, sizeof(cl_mem), &d_nodes);
@@ -390,7 +463,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                 size_t ls[1] = {(size_t)p.n_work_items};
                 size_t gs[1] = {(size_t)p.n_work_items * p.n_work_groups};
                 clFinish(ocl.clCommandQueue);
-                if(rep >= p.n_warmup)
+                //if(rep >= p.n_warmup)
                     timer.stop("Kernel");
 
                 // Continue until switching_limit condition is not satisfied
@@ -405,7 +478,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                         d_qout = d_q1;
                     }
 
-                    if(rep >= p.n_warmup)
+                    //if(rep >= p.n_warmup)
                         timer.start("Copy To Device");
                     clStatus = clEnqueueWriteBuffer(
                         ocl.clCommandQueue, d_num_t, CL_TRUE, 0, sizeof(int), h_num_t, 0, NULL, NULL);
@@ -417,10 +490,10 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                         ocl.clCommandQueue, d_gray_shade, CL_TRUE, 0, sizeof(int), h_gray_shade, 0, NULL, NULL);
                     clFinish(ocl.clCommandQueue);
                     CL_ERR();
-                    if(rep >= p.n_warmup)
+                    //if(rep >= p.n_warmup)
                         timer.stop("Copy To Device");
 
-                    if(rep >= p.n_warmup)
+                    //if(rep >= p.n_warmup)
                         timer.start("Kernel");
                     clSetKernelArg(ocl.clKernel, 4, sizeof(cl_mem), &d_qin); // Input and output queues
                     clSetKernelArg(ocl.clKernel, 5, sizeof(cl_mem), &d_qout);
@@ -429,10 +502,10 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                     clStatus = clEnqueueNDRangeKernel(ocl.clCommandQueue, ocl.clKernel, 1, NULL, gs, ls, 0, NULL, NULL);
                     clFinish(ocl.clCommandQueue);
                     CL_ERR();
-                    if(rep >= p.n_warmup)
+                   // if(rep >= p.n_warmup)
                         timer.stop("Kernel");
 
-                    if(rep >= p.n_warmup)
+                    //if(rep >= p.n_warmup)
                         timer.start("Copy Back and Merge");
                     clStatus =
                         clEnqueueReadBuffer(ocl.clCommandQueue, d_tail, CL_TRUE, 0, sizeof(int), h_tail, 0, NULL, NULL);
@@ -440,7 +513,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                         clEnqueueReadBuffer(ocl.clCommandQueue, d_iter, CL_TRUE, 0, sizeof(int), h_iter, 0, NULL, NULL);
                     clFinish(ocl.clCommandQueue);
                     CL_ERR();
-                    if(rep >= p.n_warmup)
+                   // if(rep >= p.n_warmup)
                         timer.stop("Copy Back and Merge");
 
                     h_num_t[0] = h_tail[0].load(); // Number of elements in output queue
@@ -452,7 +525,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                         h_gray_shade[0].store(GRAY1);
                 }
 
-                if(rep >= p.n_warmup)
+               // if(rep >= p.n_warmup)
                     timer.start("Copy Back and Merge");
                 clStatus = clEnqueueReadBuffer(
                     ocl.clCommandQueue, d_cost, CL_TRUE, 0, sizeof(int) * n_nodes, h_cost, 0, NULL, NULL);
@@ -470,18 +543,41 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
                     ocl.clCommandQueue, d_q2, CL_TRUE, 0, sizeof(int) * n_nodes, h_q2, 0, NULL, NULL);
                 clFinish(ocl.clCommandQueue);
                 CL_ERR();
-                if(rep >= p.n_warmup)
+               // if(rep >= p.n_warmup)
                     timer.stop("Copy Back and Merge");
             }
         }
+#ifdef LOGS
+        end_iteration();
+#endif
+
+    printf("IT CPU:%ld\t",it_cpu);
+    printf("IT GPU:%ld\n",it_gpu);	
+
+	err=new_verify(h_cost, n_nodes, p.comparison_file,it_cpu,it_gpu);
+        if(err > 0) {
+            printf("Errors: %d\n",err);
+        } else {
+            printf(".");
+        }
+#ifdef LOGS
+        log_error_count(err);
+#endif
+		// Ler a entrada novamente
+    read_input_size(n_nodes, n_edges, p);
 
     } // end of iteration
+
+#ifdef LOGS
+    end_log_file();
+#endif
     timer.print("Allocation", 1);
     timer.print("Copy To Device", p.n_reps);
     timer.print("Kernel", p.n_reps);
     timer.print("Copy Back and Merge", p.n_reps);
 
     // Verify answer
+	create_output(h_cost, n_nodes);
     verify(h_cost, n_nodes, p.comparison_file);
 
     // Free memory
