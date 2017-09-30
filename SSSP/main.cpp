@@ -170,8 +170,10 @@ int main(int argc, char **argv) {
     OpenCLSetup  ocl(p.platform, p.device);
     Timer        timer;
     cl_int       clStatus;
-
-printf("-p %d -d %d -i %d -g %d -a %.2f -t %d \n",p.platform , p.device, p.n_work_items,p.n_work_groups,p.alpha,p.n_threads);
+	long it_cpu=0;
+	long it_gpu=0;
+	int err = 0;
+printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_items, p.n_work_groups,p.n_threads,p.file_name);
     // Allocate
     int n_nodes, n_edges;
     read_input_size(n_nodes, n_edges, p);
