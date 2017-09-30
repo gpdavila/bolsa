@@ -313,7 +313,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 //** Loop over kernels
 
     for(int rep = 0; rep < p.n_reps; rep++) {
-		printf("Repetindo\n");
+		//printf("Repetindo\n");
         // Reset
         for(long i = 0; i < n_nodes; i++) {
             h_cost[i].store(INF);
@@ -374,7 +374,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 		//printf("***H_NUM_T[0] DW:%ld\n",*h_num_t);
             if((*h_num_t < p.switching_limit || GPU_EXEC == 0) &&
                 CPU_EXEC == 1) { // If the number of input queue elements is lower than switching_limit
-				printf("CPU\n");
+				//printf("CPU\n");
 				it_cpu=it_cpu+1;
                 //if(rep >= p.n_warmup)
                     timer.start("Kernel");
@@ -407,7 +407,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 
             } else if((*h_num_t >= p.switching_limit || CPU_EXEC == 0) &&
                       GPU_EXEC ==1) { // If the number of input queue elements is higher than or equal to switching_limit
-				printf("GPU\n");
+				//printf("GPU\n");
 				it_gpu=it_gpu+1;
                 //if(rep >= p.n_warmup)
                     timer.start("Copy To Device");
