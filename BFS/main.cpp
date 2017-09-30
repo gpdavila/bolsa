@@ -189,7 +189,7 @@ void read_input(long &source, Node *&h_nodes, Edge *&h_edges, const Params &p) {
     fscanf(fp, "%ld", &n_edges);
     fscanf(fp, "%ld", &source);
     printf("Number of nodes = %ld\t", n_nodes);
-    printf("Number of edges = %ld\t", n_edges);
+    printf("Number of edges = %ld\n", n_edges);
 
     // initalize the memory: Nodes
     for(long i = 0; i < n_nodes; i++) {
