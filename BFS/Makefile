@@ -56,7 +56,7 @@ ifndef CHAI_OCL_INC
 endif
 INC=-I$(CHAI_OCL_INC)
 
-SRC=main.cpp kernel.cpp
+SRC=main.cpp kernel.cpp ../include/log_helper.cpp
 OBJECTS=$(SRC:.cpp=.o)
 DEPS=$(OBJECTS:.o=.d)
 EXE=bfs

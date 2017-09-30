@@ -156,7 +156,7 @@ inline long new_verify(std::atomic_long *h_cost, long num_of_nodes, const char *
             printf("Computed node %ld cost (%ld != %ld) does not match the expected value\n", i, h_cost[i].load(), cost);
 #ifdef LOGS
 		        char error_detail[250];
-        		sprintf(error_detail,"Nodo: %ld,r:%ld, e:%ld, CPU:%ld , GPU%ld \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);
+        		sprintf(error_detail,"Nodo: %ld,r:%ld, e:%ld, CPU:%d , GPU%d \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);
 
        			 log_error_detail(error_detail);
 #endif
@@ -229,7 +229,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 #ifdef LOGS
     set_iter_interval_print(10);
     char test_info[500];
-    snprintf(test_info, 500, "-i %d -g %d -t %d -f %s \n",p.n_work_items, p.n_work_groupsp.n_threads, p.file_name);
+    snprintf(test_info, 500, "-i %d -g %d -t %d -f %s \n",p.n_work_items, p.n_work_groups,p.n_threads, p.file_name);
     start_log_file("openclBreadthFirstSearch", test_info);
 	//printf("Com LOG\n");
 #endif
