@@ -564,7 +564,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
         log_error_count(err);
 #endif
 		// Ler a entrada novamente
-    read_input_size(n_nodes, n_edges, p);
+    read_input(source, h_nodes, h_edges, p);
 
     } // end of iteration
 
