@@ -142,9 +142,13 @@ inline long new_verify(std::atomic_long *h_cost, long num_of_nodes, const char *
     // the number of nodes in the output
     long num_of_nodes_o = 0;
     fscanf(fpo, "%ld", &num_of_nodes_o);
-    if(num_of_nodes != num_of_nodes_o) {
+
+
+/*Adicionar como tipo de erro ?*/
+
+    if(num_of_nodes != num_of_nodes_o) { 
         printf("Number of nodes does not match the expected value\n");
-        exit(EXIT_FAILURE);
+        //exit(EXIT_FAILURE);
     }
 
     // cost of nodes in the output
@@ -156,7 +160,7 @@ inline long new_verify(std::atomic_long *h_cost, long num_of_nodes, const char *
             printf("Computed node %ld cost (%ld != %ld) does not match the expected value\n", i, h_cost[i].load(), cost);
 #ifdef LOGS
 		        char error_detail[250];
-        		sprintf(error_detail,"Nodo: %ld,r:%ld, e:%ld, CPU:%d , GPU:%d \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);
+        		sprintf(error_detail,"Nodo: %ld,e:%ld, r:%ld, CPU:%d , GPU:%d \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);
 
        			 log_error_detail(error_detail);
 #endif

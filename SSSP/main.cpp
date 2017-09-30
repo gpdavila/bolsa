@@ -157,7 +157,7 @@ inline int new_verify(std::atomic_int *h_cost, int num_of_nodes, const char *fil
                 cost);
 #ifdef LOGS
 		        char error_detail[250];
-        		sprintf(error_detail,"Nodo: %ld,e:%ld, r:%ld, CPU:%d , GPU:%d \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);
+        		sprintf(error_detail,"Nodo: %d,e:%d, r:%d, CPU:%d , GPU:%d \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);
 
        			 log_error_detail(error_detail);
 #endif
@@ -568,6 +568,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 
     } // end of iteration
 
+
 #ifdef LOGS
     end_log_file();
 #endif
@@ -577,8 +578,8 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
     timer.print("Copy Back and Merge", p.n_reps);
 
     // Verify answer
-	create_output(h_cost, n_nodes);
-    verify(h_cost, n_nodes, p.comparison_file);
+    create_output(h_cost, n_nodes);
+    //verify(h_cost, n_nodes, p.comparison_file);
 
     // Free memory
     timer.start("Deallocation");
