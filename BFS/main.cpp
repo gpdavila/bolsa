@@ -353,7 +353,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
             }
         }
         h_num_t[0] = h_tail[0].load();
-        printf("H_NUM_T[0]:%ld\n",h_num_t[0]);
+       // printf("H_NUM_T[0]:%ld\n",h_num_t[0]);
 	    h_tail[0].store(0);
         h_threads_run[0].fetch_add(1);
         h_iter[0].fetch_add(1);
@@ -371,7 +371,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 
         // Run subsequent iterations on CPU or GPU until number of input queue elements is 0
         while(*h_num_t != 0) {
-		printf("***H_NUM_T[0] DW:%ld\n",*h_num_t);
+		//printf("***H_NUM_T[0] DW:%ld\n",*h_num_t);
             if((*h_num_t < p.switching_limit || GPU_EXEC == 0) &&
                 CPU_EXEC == 1) { // If the number of input queue elements is lower than switching_limit
 				printf("CPU\n");
