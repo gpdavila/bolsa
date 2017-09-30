@@ -128,7 +128,7 @@ void read_input_size(long &n_nodes, long &n_edges, const Params &p) {
 }
 
 void read_input(long &source, Node *&h_nodes, Edge *&h_edges, const Params &p) {
-
+	int a;
     long   start, edgeno;
     long   n_nodes, n_edges;
     long   id, cost;
@@ -239,7 +239,7 @@ int main(int argc, char **argv) {
     timer.stop("Copy To Device");
 
     for(int rep = 0; rep < p.n_reps + p.n_warmup; rep++) {
-
+	printf("Repetindo\n");
         // Reset
         for(long i = 0; i < n_nodes; i++) {
             h_cost[i].store(INF);
@@ -274,7 +274,8 @@ int main(int argc, char **argv) {
             }
         }
         h_num_t[0] = h_tail[0].load();
-        h_tail[0].store(0);
+        printf("H_NUM_T[0]:%ld\n",h_num_t[0]);
+	h_tail[0].store(0);
         h_threads_run[0].fetch_add(1);
         h_iter[0].fetch_add(1);
         if(rep >= p.n_warmup)
@@ -291,10 +292,10 @@ int main(int argc, char **argv) {
 
         // Run subsequent iterations on CPU or GPU until number of input queue elements is 0
         while(*h_num_t != 0) {
-
+		printf("***H_NUM_T[0] DW:%ld\n",*h_num_t);
             if((*h_num_t < p.switching_limit || GPU_EXEC == 0) &&
                 CPU_EXEC == 1) { // If the number of input queue elements is lower than switching_limit
-
+		printf("CPU\n");
                 if(rep >= p.n_warmup)
                     timer.start("Kernel");
 
@@ -325,7 +326,7 @@ int main(int argc, char **argv) {
             } else if((*h_num_t >= p.switching_limit || CPU_EXEC == 0) &&
                       GPU_EXEC ==
                           1) { // If the number of input queue elements is higher than or equal to switching_limit
-
+		printf("GPU\n");
                 if(rep >= p.n_warmup)
                     timer.start("Copy To Device");
                 clStatus = clEnqueueWriteBuffer(
