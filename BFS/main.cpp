@@ -157,7 +157,7 @@ inline long new_verify(std::atomic_long *h_cost, long num_of_nodes, const char *
         fscanf(fpo, "%ld %ld", &j, &cost);
         if(i != j || h_cost[i].load() != cost) {
 			  count_error++;	
-            printf("Computed node %ld cost (%ld != %ld) does not match the expected value\n", i, h_cost[i].load(), cost);
+            //printf("Computed node %ld cost (%ld != %ld) does not match the expected value\n", i, h_cost[i].load(), cost);
 #ifdef LOGS
 		        char error_detail[250];
         		sprintf(error_detail,"Nodo: %ld,e:%ld, r:%ld, CPU:%d , GPU:%d \n",i,h_cost[i].load(), cost,it_cpu,it_gpu);

@@ -33,6 +33,10 @@
  *
  */
 
+/*
+ * asdasasdaasd
+ * 
+ * */
 #include "kernel.h"
 #include "support/common.h"
 #include "support/ocl.h"
@@ -553,7 +557,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
 
     printf("IT CPU:%ld\t",it_cpu);
     printf("IT GPU:%ld\n",it_gpu);	
-
+    //create_output(h_cost, n_nodes);
 	err=new_verify(h_cost, n_nodes, p.comparison_file,it_cpu,it_gpu);
         if(err > 0) {
             printf("Errors: %d\n",err);
@@ -578,7 +582,7 @@ printf("-p %d -d %d -i %d -g %d  -t %d -f %s\n",p.platform , p.device, p.n_work_
     timer.print("Copy Back and Merge", p.n_reps);
 
     // Verify answer
-    create_output(h_cost, n_nodes);
+    //create_output(h_cost, n_nodes);
     //verify(h_cost, n_nodes, p.comparison_file);
 
     // Free memory
