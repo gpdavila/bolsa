@@ -10,15 +10,18 @@ else
 	exit 1	 
 fi
 
-	TIME=$((TOTAL_TIME/10))
-	echo "$TIME"
+	TIME=100	#Amostra a cada 100ms
+	AMOS=$((TOTAL_TIME/TIME))
+	echo "Amostras: $AMOS"
 	
-for I in 1 2 3 4 5 6 7 8 9 10 
+i=1
+while [ "$i" -le $AMOS ]
 do
 	#mkdir ./results/$ITER
 #	./script_energia.sh >> ./results/$ITER/$I.txt
 	./script_energia.sh >> ./results/$ITER/log.txt
 
-	sleep $TIME	# Delay
+	sleep 0.1	# Delay
 	echo "Energy !"
+	i=$(( i+1 ))
 done
